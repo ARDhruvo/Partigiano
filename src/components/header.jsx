@@ -3,9 +3,6 @@ import Button from "./button";
 import { Link } from "react-router-dom";
 
 function header() {
-
-  
-
   return (
     <div className="header">
       <div className="header-logo">
@@ -14,9 +11,9 @@ function header() {
         </Link>
       </div>
       <div className="headerbtn">
-        {/* <Link to="/category">
+        <Link to="/category">
           <button>Add</button>
-        </Link> */}
+        </Link>
         <Link to="/login">
           <button>Login</button>
         </Link>
