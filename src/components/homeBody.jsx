@@ -19,7 +19,8 @@ function homeBody() {
   return (
     <div className="home-content">
       <div className="homeTitle">
-        <h3>Categories</h3>
+        Categories
+        <hr />
       </div>
 
       <CategoryContents categories={categories} />
