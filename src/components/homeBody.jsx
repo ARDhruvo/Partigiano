@@ -4,8 +4,8 @@ function homeBody() {
 
   const [categories,setCategory] = useState([
     { title: 'Education', body: 'Post anything related to your study' , id: 1},
-    { title: 'Education', body: 'Post anything related to your study', id: 2},
-    { title: 'Education', body: 'Post anything related to your study', id: 3},
+    { title: 'Emergency', body: 'Post anything urgent', id: 2},
+    { title: 'Education2', body: 'Post anything related to your study', id: 3},
   ]); 
 
   return (
