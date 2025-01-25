@@ -32,7 +32,7 @@ function App() {
   };
 
   return (
-    <>
+    <div className="loginPage">
       <div>
         <header className="logPage">
           <h2>Welcome To</h2>
@@ -57,7 +57,7 @@ function App() {
           {inactBtn}
         </button>
       </div>
-    </>
+    </div>
   );
 }
 
