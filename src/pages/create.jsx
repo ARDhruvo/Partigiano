@@ -32,7 +32,7 @@ function CreatePost() {
           Write Your Blog:
           <textarea value={content} onChange={(e) => setContent(e.target.value)} rows="6" style={{ display: "block", width: "100%", padding: "10px", marginTop: "5px" }} />
         </label>
-
+        
         <button style={{ padding: "10px 20px",  }}>
           Post
         </button>
