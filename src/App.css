@@ -5,13 +5,10 @@
   align-items: center;
   max-width: 600px;
   margin: 0 auto;
-<<<<<<< HEAD
   /* padding: 2rem; */
   text-align: center;
-=======
   border-bottom: 1px solid black;
   
->>>>>>> secondary
 }
 
 .header .headerbtn{
@@ -41,7 +38,6 @@
   background-color: hsl(0, 97%, 76%);
 }
 
-<<<<<<< HEAD
 .btnLog {
   /* flex-wrap: ; */
   margin-top: 2em;
@@ -54,7 +50,6 @@
   margin-top: 2em;
   padding: 0.6em 6.2em;
   text-align: center;
-=======
 .header-logo a:hover{
   color: hsl(0, 0%, 30%);
 }
@@ -98,7 +93,6 @@
 .blog-preview h2{
   font-size: 20px;
   margin-bottom: 8px;
->>>>>>> secondary
 }
 
 .inactbtnLog {
