@@ -1,8 +1,15 @@
 import React from "react";
 import Button from "./button";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 function header() {
+
+  const[addPath,setAddPath] =useState("/login");
+  const[btn1Name,setBtn1Name] =useState("Login");
+  const[btn2Name,setBtn2Name] =useState("Sign Up");
+  
+
   return (
     <div className="header">
       <div className="header-logo">
@@ -11,14 +18,14 @@ function header() {
         </Link>
       </div>
       <div className="headerbtn">
-        <Link to="/category">
+        <Link to={addPath}>
           <button>Add</button>
+        </Link> 
+        <Link to="/login">
+          <button>{btn1Name}</button>
         </Link>
         <Link to="/login">
-          <button>Login</button>
-        </Link>
-        <Link to="/login">
-          <button>Sign Up</button>
+          <button>{btn2Name}</button>
         </Link>
       </div>
       <div>
