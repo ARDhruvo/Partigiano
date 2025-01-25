@@ -1,42 +1,82 @@
-#root {
-  max-width: 1280px;
+/*--------Header---------*/
+.header{
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  max-width: 600px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  border-bottom: 1px solid black;
+  
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.header .headerbtn{
+  margin-left: auto;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.header-logo a{
+  font-weight: bold;
+  font-size: 2rem;
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+  font-style :italic;
+  margin-left: 16px;
+  padding: 6px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.headerbtn a{
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+  border: 1.5px solid black;
+  margin-left: 16px;
+  padding: 6px;
+  font-weight: bold;
+  border-radius: 10px;
+  background-color: hsl(0, 97%, 76%);
 }
 
-.card {
-  padding: 2em;
+.header-logo a:hover{
+  color: hsl(0, 0%, 30%);
 }
 
-.read-the-docs {
-  color: #888;
+.headerbtn a:hover{
+  color: hsl(0, 0%, 20%);
+  background-color: hsl(0, 97%, 86%);
+}
+/*--------homeBody---------*/
+.home-content{
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+}
+.category-preview{
+  padding: 10px 16px;
+  margin : 20px 0;
+  border-bottom: 1px solid black;
+}
+.category-preview:hover{
+  box-shadow: 1px 3px 5px rgba(0,0,0,0.1);
+}
+.category-preview h2{
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+/*--------CategoryBody---------*/
+.category-content{
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+}
+.blog-preview{
+  padding: 10px 16px;
+  margin : 20px 0;
+  border-bottom: 1px solid black;
+}
+.blog-preview:hover{
+  box-shadow: 1px 3px 5px rgba(0,0,0,0.1);
+}
+.blog-preview h2{
+  font-size: 20px;
+  margin-bottom: 8px;
 }
