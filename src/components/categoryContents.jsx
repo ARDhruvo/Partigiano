@@ -8,6 +8,7 @@ function categoryContents(props) {
 
         {categories.map((category) => (
             <div className='category-preview' key={category.id}>
+                
                 <Link to={`/category/${category.id}`}>
                   <h2>{ category.title }</h2>
                   <p>{category.body}</p>
