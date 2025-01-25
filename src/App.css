@@ -3,7 +3,7 @@
   display: flex;
   justify-content: space-around;
   /* position: fixed; */
-  align-items: end;
+  align-items: end  ;
   z-index: 1000;
   width: 100%;
   border-bottom: 1px solid hsla(0, 0%, 0%, 0.87);
@@ -141,6 +141,76 @@ h3 {
   margin-top: 1rem;
   margin-bottom: 4rem;
 }
+
+/*-------------Comment Section-------------*/
+.comment-box-container {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.comment-box-textarea {
+  width: 90%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  resize: none;
+  font-size: 1rem;
+}
+
+.comment-box-button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: black;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-bottom: auto;
+}
+
+.comment-box-button:hover {
+  background-color: hsl(0, 0%, 30%);
+}
+
+.comment-box-comments {
+  margin-top: auto;
+}
+
+.comment-box-subtitle {
+  font-size: 1.25rem;
+  font-weight: semi-bold;
+  margin-bottom: 0.5rem;
+  text-align: left ;
+}
+
+.comment-box-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.comment-box-item {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+.comment-box-no-comments {
+  color: #777;
+  font-size: 0.9rem;
+  text-align: left;
+}
+
 /* Mobile styles for screens with a max-width of 400px */
 
 @media only screen and (max-width: 460px) {
@@ -167,7 +237,7 @@ h3 {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 10px;
+    row-gap: 0px;
     align-items: center;
   }
 
