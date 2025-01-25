@@ -1,0 +1,74 @@
+.loginPage {
+  font-family: "Times New Roman", Times, serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  align-items: center;
+
+  color-scheme: light dark;
+  color: hsla(0, 0%, 0%, 0.87);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+
+  color: hsla(0, 0%, 0%, 0.87);
+  max-width: 1280px;
+  margin: 0 auto;
+  text-align: center;
+  align-items: center;
+  margin: 0;
+  place-items: top;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+header.logPage {
+  margin-top: 2.5em;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+  margin: 0px;
+}
+h2 {
+  margin: 0;
+}
+
+.btnLog {
+  /* flex-wrap: ; */
+  margin-top: 2em;
+  padding: 0.6em 6.5em;
+  text-align: center;
+}
+
+.btnSign {
+  /* flex-wrap: ; */
+  margin-top: 2em;
+  padding: 0.6em 6.2em;
+  text-align: center;
+}
+
+.inactbtnLog {
+  padding: 0.6em 4.8em;
+  text-align: center;
+}
+
+.inactbtnSign {
+  padding: 0.6em 4.5em;
+  text-align: center;
+}
+.textbox {
+  color: black;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+@media only screen and (max-width: 400px) {
+  .loginPage {
+    overflow: visible;
+  }
+}

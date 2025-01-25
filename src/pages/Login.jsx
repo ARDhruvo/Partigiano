@@ -1,6 +1,8 @@
 import { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Field from "../components/Field";
+import { Link } from "react-router-dom";
+import "./Login.css";
 
 function App() {
   const [btn, setBtn] = useState("Log In");
@@ -10,6 +12,7 @@ function App() {
   const [inactBtnClass, setinactBtnClass] = useState("inactbtnSign");
   const [email, setEmail] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
+  const [btnSnippet, setBtnSnippet] = useState("/");
 
   const swap = () => {
     if (loggedIn) {
@@ -20,6 +23,7 @@ function App() {
       setinactBtnClass("inactbtnLog");
       setEmail(<Field title="E-Mail" />);
       setConfirmPassword(<Field title="Confirm Password" vis="password" />);
+      setBtnSnippet("/login");
     } else {
       setLogIn(true);
       setBtn("Log In");
@@ -28,6 +32,20 @@ function App() {
       setinactBtnClass("inactbtnSign");
       setEmail();
       setConfirmPassword();
+      setBtnSnippet("/");
+    }
+  };
+
+  const checkLogIn = () => {
+    if (loggedIn == false) {
+      setLogIn(true);
+      setBtn("Log In");
+      setInactBtn("Sign Up Instead?");
+      setBtnClass("btnLog");
+      setinactBtnClass("inactbtnSign");
+      setEmail();
+      setConfirmPassword();
+      setBtnSnippet("/");
     }
   };
 
@@ -50,7 +68,11 @@ function App() {
       </div>
       <div className="textbox">{confirmPassword}</div>
       <div>
-        <button className={btnClass}>{btn}</button>
+        <Link to={btnSnippet}>
+          <button className={btnClass} onClick={checkLogIn}>
+            {btn}
+          </button>
+        </Link>
       </div>
       <div>
         <button className={inactBtnClass} onClick={swap}>
