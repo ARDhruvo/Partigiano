@@ -5,7 +5,7 @@ import { useState } from "react";
 
 function header() {
 
-  const[addPath,setAddPath] =useState("/login");
+  const[addPath,setAddPath] =useState("/create");
   const[btn1Name,setBtn1Name] =useState("Login");
   const[btn2Name,setBtn2Name] =useState("Sign Up");
   

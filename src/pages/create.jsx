@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import React from 'react'
+import Header from '../components/header';
 
 function CreatePost() {
   const [category, setCategory] = useState('');
@@ -11,6 +12,8 @@ function CreatePost() {
   };
 
   return (
+    <>
+    <Header/>
     <div style={{ textAlign: "center", padding: "20px" }}>
       <h2>Create a New Post</h2>
       <form onSubmit={handleSubmit} style={{ maxWidth: "600px", margin: "auto", textAlign: "left" }}>
@@ -35,6 +38,7 @@ function CreatePost() {
         </button>
       </form>
     </div>
+    </>
   );
 }
 
