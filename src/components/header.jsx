@@ -17,9 +17,9 @@ function header() {
         <Link to="/login">
           <button>Login</button>
         </Link>
-        {/* <Link to="/login">
+        <Link to="/login">
           <button>Sign Up</button>
-        </Link> */}
+        </Link>
       </div>
       <div>
         <hr />
