@@ -1,7 +1,7 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  /* padding: 2rem; */
   text-align: center;
 }
 
@@ -33,10 +33,31 @@
   }
 }
 
-.card {
-  padding: 2em;
+.btnLog {
+  /* flex-wrap: ; */
+  margin-top: 2em;
+  padding: 0.6em 6.5em;
+  text-align: center;
 }
 
-.read-the-docs {
-  color: #888;
+.btnSign {
+  /* flex-wrap: ; */
+  margin-top: 2em;
+  padding: 0.6em 6.2em;
+  text-align: center;
+}
+
+.inactbtnLog {
+  padding: 0.6em 4.8em;
+  text-align: center;
+}
+
+.inactbtnSign {
+  padding: 0.6em 4.5em;
+  text-align: center;
+}
+.textbox
+{
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
