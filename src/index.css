@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 :root {
 
   font-family: 'Times New Roman', Times, serif;
@@ -70,3 +71,12 @@ button:active {
     color: white;
   }
 }
+=======
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Times New Roman', Times, serif;
+  background-color: hsl(51, 100%, 97%);
+}
+>>>>>>> secondary
