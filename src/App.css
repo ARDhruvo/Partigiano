@@ -57,7 +57,13 @@
 .category-preview h2{
   font-size: 20px;
   margin-bottom: 8px;
+  color: black;
 }
+.category-preview a{
+  text-decoration: none;
+  color: black;
+}
+
 /*--------CategoryBody---------*/
 .category-content{
   max-width: 600px;
@@ -75,4 +81,8 @@
 .blog-preview h2{
   font-size: 20px;
   margin-bottom: 8px;
+}
+.blog-category h2{
+  font-size: 200%;
+  margin-bottom: 30px;
 }

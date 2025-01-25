@@ -13,8 +13,9 @@ function App() {
 
     <>
       <Routes>
-        <Route path="/" element={<Home/>} />
+        <Route exact path="/" element={<Home/>} />
         <Route path="category" element={<Category/>}/>
+        <Route path="category/:id" element={<Category/>}/>
         <Route path="login" element={<Login/>}/>
       </Routes>
     </>

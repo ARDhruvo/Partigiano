@@ -1,5 +1,6 @@
 import React from 'react'
 import Button from './button'
+import { Link } from 'react-router-dom'
 
 
 function header() {
@@ -8,12 +9,12 @@ function header() {
   return (
     <div className='header'>
         <div className='header-logo'>
-            <a href="#">Partigiano</a>
+            <Link to="/">Partigiano</Link>
         </div>
         <div className='headerbtn'>
-            <a href="category.jsx">Add</a>
-            <a href="">Login</a>
-            <a href="">Sign Up</a>
+            <Link to="/category">Add</Link>
+            <Link to="/login">Login</Link>
+            <Link to="/login">Sign Up</Link>
         </div>
     </div>
   )

@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
+import CategoryContents from './categoryContents';
 
 function homeBody() {
 
   const [categories,setCategory] = useState([
-    { title: 'Education', body: 'Post anything related to your study' , id: 1},
-    { title: 'Emergency', body: 'Post anything urgent', id: 2},
-    { title: 'Education2', body: 'Post anything related to your study', id: 3},
+    { title: 'Education', body: 'Post anything related to your study' , id: 'Education'},
+    { title: 'Emergency', body: 'Post anything urgent', id: 'Emergency'},
+    { title: 'Education2', body: 'Post anything related to your study', id: 'Education2'},
   ]); 
 
   return (
@@ -13,12 +14,9 @@ function homeBody() {
       <div className='homeTitle'>
         <h1>Categories</h1>
       </div>
-        {categories.map((category) => (
-            <div className='category-preview' key={category.id}>
-                <h2>{ category.title }</h2>
-                <p>{category.body}</p>
-            </div>
-        ))}
+      
+      <CategoryContents categories={categories}/>
+        
     </div>
   )
 }

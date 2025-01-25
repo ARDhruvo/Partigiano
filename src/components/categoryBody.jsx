@@ -1,22 +1,24 @@
 import React from 'react'
 import { useState } from 'react';
+import BlogContents from './blogContents';
+import { useParams } from 'react-router-dom';
 
 function categoryBody() {
 
+  const { id } =useParams();
+
   const [blogs,setBlogs] = useState([
-      { title: 'Hello World', body: 'Lorem ipsen......', author:'Nazim' , id: 1},
-      { title: 'Hello World', body: 'Lorem ipsen......', author:'Raian' , id: 2},
-      { title: 'Hello World', body: 'Lorem ipsen......', author:'Khan' , id: 3},
+      { category:'Education', title: 'Hello Education', body: 'Lorem ipsen......', author:'Nazim' , id: 1},
+      { category:'Emergency', title: 'Hello Emergency', body: 'Lorem ipsen......', author:'Raian' , id: 2},
+      { category:'Education2', title: 'Hello Education1', body: 'Lorem ipsen......', author:'Khan' , id: 3},
     ]); 
     
   return (
     <div className='category-content'>
-        {blogs.map((blog) => (
-            <div className='blog-preview' key={blog.id}>
-                <h2>{ blog.title }</h2>
-                <p>Written by {blog.author}</p>
-            </div>
-        ))}
+        <div className='blog-category'>
+          <h2>Category : {id}</h2>
+        </div>
+        <BlogContents blogs={blogs.filter((blog) => blog.category === id  )}/>
     </div>
   )
 }
