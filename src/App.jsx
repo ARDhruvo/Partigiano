@@ -6,6 +6,7 @@ import Category from "./pages/category";
 import Profile from "./pages/profile";
 import AboutUs from "./pages/aboutUs";
 import Login from "./pages/Login";
+import Blog from "./pages/blog";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 
@@ -21,6 +22,7 @@ function App() {
         <Route path="login" element={<Login/>}/>
         <Route path="profile" element={<Profile/>}/>
         <Route path="aboutUs" element={<AboutUs/>}/>
+        <Route path="blog/:id" element={<Blog/>}/>
       </Routes>
     </>
   );
