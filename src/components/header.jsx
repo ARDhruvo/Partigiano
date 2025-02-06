@@ -6,8 +6,8 @@ import { useState } from "react";
 function header() {
 
   const[addPath,setAddPath] =useState("/create");
-  const[btn1Name,setBtn1Name] =useState("Login");
-  const[btn2Name,setBtn2Name] =useState("Sign Up");
+  const[btn1Name,setBtn1Name] =useState("About");
+  const[btn2Name,setBtn2Name] =useState("Login");
   
 
   return (
@@ -21,7 +21,7 @@ function header() {
         <Link to={addPath}>
           <button>Add</button>
         </Link> 
-        <Link to="/login">
+        <Link to="/aboutus">
           <button>{btn1Name}</button>
         </Link>
         <Link to="/login">

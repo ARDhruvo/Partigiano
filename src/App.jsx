@@ -1,6 +1,5 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+
 import Home from "./pages/home";
 import Category from "./pages/category";
 import Profile from "./pages/profile";

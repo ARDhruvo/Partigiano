@@ -7,6 +7,7 @@
   z-index: 1000;
   width: 100%;
   border-bottom: 1px solid hsla(0, 0%, 0%, 0.87);
+  padding-right: auto;
 }
 
 h3 {
@@ -24,11 +25,17 @@ h3 {
 }
 
 .headerbtn {
+  position: absolute;
+  padding-right: 2rem;
   padding-left: 45rem;
   padding-bottom: 1rem;
   display: flex;
   justify-content: space-between;
   gap: 5px;
+}
+
+.headerbtn a{
+  margin-right: 1rem;
 }
 
 .home-content {
@@ -232,6 +239,7 @@ h3 {
   }
 
   .headerbtn {
+    position: static;
     padding-left: 0;
     padding-bottom: 1rem;
     display: flex;

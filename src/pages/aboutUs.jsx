@@ -1,4 +1,5 @@
 import React from "react";
+import Header from "../components/header";
 
 function AboutUs() {
   const teamMembers = [
@@ -26,6 +27,8 @@ function AboutUs() {
   ];
 
   return (
+   <> 
+    <Header/>
     <div className="about-us-container">
       <h2>About Us</h2>
       <div className="team-members">
@@ -63,6 +66,7 @@ function AboutUs() {
         .
       </div>
     </div>
+    </> 
   );
 }
 
