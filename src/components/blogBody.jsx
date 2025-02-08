@@ -8,10 +8,11 @@ function BlogBody() {
   const [contents, setContents] = useState([
     {
       title: "Hello Education",
-      body: "Lorem ipsen......",
+      body: "Harvard University is great! Visit https://www.harvard.edu/ or check this image https://aust.edu/storage/files/hBcVGkt0paRr9fzRpHK8sEYm2aEIxtcad3fUQ5NI.jpg",
       author: "Nazim",
       id: "1",
       likes: 0,
+      location: "Harvard University, MA, USA", 
     },
     {
       title: "Hello Emergency",
