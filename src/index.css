@@ -44,7 +44,7 @@ button {
   color: #fdfdf0;
   background-color: hsla(0, 0%, 0%, 0.87);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
@@ -58,6 +58,7 @@ button:focus-visible {
 
 button:active {
   background-color: hsla(0, 0%, 20%, 0.87);
+  transform: translateY(1px);
 }
 
 /* input-styles.css */

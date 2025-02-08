@@ -44,6 +44,7 @@ h3 {
   /* margin: 20px 0; */
   border-bottom: 1px solid black;
   width: 69%;
+  transform: translateY(-1px);
 }
 
 .homeTitle {
@@ -357,6 +358,7 @@ h3 {
     padding: 16px;
     box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.5);
     width: 100%;
+    transform: translateY(-1px);
   }
 
   /* Home Title */

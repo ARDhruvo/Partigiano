@@ -63,6 +63,86 @@ body {
   transform: translateY(1px);
 }
 
+/* Home Content Styles */
+.home-content {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  padding-left: 5rem; /* Increased padding to move content more to the right */
+}
+
+.homeTitle {
+  font-size: 2.5rem; /* Increased font size for the title */
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: left; /* Align title to the left */
+}
+
+/* Category Body Styles */
+.categoryBody {
+  margin-top: 2rem;
+}
+
+.categoryBody .homeTitle {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.categoryBody hr {
+  border: 0;
+  height: 1px;
+  background: #ccc;
+  margin-bottom: 2rem;
+}
+
+/* Blog Contents Styles */
+.blogContents {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.blogContents .blog {
+  background-color: red;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.blogContents .blog:hover {
+  transform: translateY(-5px);
+}
+
+.blogContents .blog h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #000000;
+}
+
+.blogContents .blog p {
+  font-size: 1rem;
+  color: #555555;
+  margin-bottom: 0.5rem;
+}
+
+.blogContents .blog .author {
+  font-size: 0.9rem;
+  color: #777;
+  font-style: italic;
+}
+
+.blogContents .blog .likes {
+  font-size: 0.9rem;
+  color: #007bff;
+  font-weight: bold;
+}
+
 /* Responsive Styles */
 @media only screen and (max-width: 768px) {
   .header {
@@ -80,6 +160,15 @@ body {
   .headerbtn button {
     padding: 0.5rem;
     font-size: 0.9rem;
+  }
+
+  .home-content {
+    padding: 1rem;
+    padding-left: 3rem; /* Adjusted padding for smaller screens */
+  }
+
+  .categoryBody .homeTitle {
+    font-size: 2rem; /* Adjusted font size for smaller screens */
   }
 }
 
@@ -104,11 +193,12 @@ body {
     font-size: 0.8rem;
   }
 
-  /* Home content */
   .home-content {
-    max-width: 100%;
-    padding-left: 0;
-    margin-left: 0;
-    margin-right: 0;
+    padding: 1rem;
+    padding-left: 2rem; /* Adjusted padding for very small screens */
+  }
+
+  .categoryBody .homeTitle {
+    font-size: 1.75rem; /* Further reduce font size for very small screens */
   }
 }

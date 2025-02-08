@@ -67,10 +67,6 @@ h2 {
   margin-right: auto;
 }
 
-.MuiTextField-root {
-  /* margin-bottom: 0.5em !important; */
-}
-
 .MuiInputLabel-root {
   color: rgba(0, 0, 0, 0.6) !important;
 }

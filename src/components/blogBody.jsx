@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import Contents from "./contents";
+import "./blog.css";
 
 function BlogBody() {
   const { id } = useParams();
@@ -12,7 +13,7 @@ function BlogBody() {
       author: "Nazim",
       id: "1",
       likes: 0,
-      location: "Harvard University, MA, USA", 
+      location: "Harvard University, MA, USA",
     },
     {
       title: "Hello Emergency",
@@ -40,7 +41,9 @@ function BlogBody() {
   const handleLike = (postId) => {
     setContents((prevContents) =>
       prevContents.map((content) =>
-        content.id === postId ? { ...content, likes: content.likes + 1 } : content
+        content.id === postId
+          ? { ...content, likes: content.likes + 1 }
+          : content
       )
     );
   };
@@ -53,7 +56,10 @@ function BlogBody() {
           <div key={content.id} className="post-container">
             <Contents contents={[content]} />
             <div className="button-container" style={{ marginLeft: "40px" }}>
-              <button className="like-button" onClick={() => handleLike(content.id)}>
+              <button
+                className="like-button"
+                onClick={() => handleLike(content.id)}
+              >
                 Like ({content.likes})
               </button>
               <button className="report-button" style={{ marginLeft: "10px" }}>

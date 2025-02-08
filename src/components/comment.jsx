@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+
+import "./blog.css";
 
 const CommentBox = () => {
   const [comments, setComments] = useState([]);
@@ -36,14 +38,18 @@ const CommentBox = () => {
         {comments.length > 0 ? (
           <ul className="comment-box-list">
             {comments.map((comment, index) => (
-              <li key={index} className="comment-box-item" style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <li
+                key={index}
+                className="comment-box-item"
+                style={{ display: "flex", justifyContent: "space-between" }}
+              >
                 <span>{comment.text}</span>
                 {comment.reported ? (
                   <span className="reported-label"> (Reported)</span>
                 ) : (
                   <span
                     className="report-text"
-                    style={{ cursor: 'pointer', color: 'red' }}
+                    style={{ cursor: "pointer", color: "red" }}
                     onClick={() => handleReportComment(index)}
                   >
                     Report

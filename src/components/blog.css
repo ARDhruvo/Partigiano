@@ -1,0 +1,220 @@
+/* styles.css */
+
+/* General Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Times New Roman", Times, serif;
+  overflow: auto;
+}
+
+body {
+  background-color: #f5f5f5;
+  color: hsla(0, 0%, 0%, 0.87);
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Blog Body Styles */
+.post-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.post-container .author {
+  font-size: 1rem;
+  font-weight: bold;
+  color: hsla(0, 0%, 0%, 0.87);
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+.post-container .title {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: hsla(0, 0%, 0%, 0.87);
+}
+
+.post-container .content {
+  font-size: 1rem;
+  text-align: justify;
+  margin-bottom: 1.5rem;
+  color: hsla(0, 0%, 0%, 0.87);
+}
+
+/* Like and Report Buttons */
+.button-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 1rem;
+  overflow-y: hidden;
+}
+
+.like-button,
+.report-button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* .like-button {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.like-button:hover {
+  background-color: #0056b3;
+}
+
+.report-button {
+  background-color: #dc3545;
+  color: #fff;
+  margin-left: 10px;
+}
+
+.report-button:hover {
+  background-color: #a71d2a;
+} */
+
+/* Comment Box Styles */
+.comment-box-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.comment-box-textarea {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  resize: none;
+  color: hsla(0, 0%, 0%, 0.87);
+}
+
+/* .comment-box-button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.comment-box-button:hover {
+  background-color: #0056b3;
+} */
+
+.comment-box-comments {
+  margin-top: 1.5rem;
+}
+
+.comment-box-subtitle {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: hsla(0, 0%, 0%, 0.87);
+}
+
+.comment-box-list {
+  list-style: none;
+  padding: 0;
+}
+
+.comment-box-item {
+  padding: 0.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  background-color: #f9f9f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.comment-box-item span {
+  font-size: 1rem;
+  color: hsla(0, 0%, 0%, 0.87);
+}
+
+.reported-label {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+.report-text {
+  color: #dc3545;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.comment-box-no-comments {
+  color: #777;
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* Responsive Styles */
+@media only screen and (max-width: 768px) {
+  .post-container,
+  .comment-box-container {
+    padding: 1rem;
+  }
+
+  .post-container .title {
+    font-size: 1.75rem;
+  }
+
+  .post-container .content {
+    font-size: 0.9rem;
+  }
+
+  .comment-box-textarea {
+    font-size: 0.9rem;
+  }
+
+  .comment-box-button {
+    font-size: 0.9rem;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .post-container .title {
+    font-size: 1.5rem;
+  }
+
+  .post-container .content {
+    font-size: 0.8rem;
+  }
+
+  .comment-box-textarea {
+    font-size: 0.8rem;
+  }
+
+  .comment-box-button {
+    font-size: 0.8rem;
+  }
+}

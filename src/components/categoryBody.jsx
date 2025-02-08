@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import BlogContents from "./blogContents";
 import { useParams } from "react-router-dom";
+import "./home.css";
 
 function categoryBody() {
   const { id } = useParams();
@@ -13,7 +14,7 @@ function categoryBody() {
       body: "Lorem ipsen......",
       author: "Nazim",
       id: 1,
-      likes:2,
+      likes: 2,
     },
     {
       category: "Emergency",
@@ -21,7 +22,7 @@ function categoryBody() {
       body: "Lorem ipsen......",
       author: "Raian",
       id: 2,
-      likes:2,
+      likes: 2,
     },
     {
       category: "Emergency",
@@ -29,7 +30,7 @@ function categoryBody() {
       body: "Lorem ipsen......",
       author: "NRK",
       id: 4,
-      likes:4,
+      likes: 4,
     },
     {
       category: "Education2",
@@ -37,7 +38,7 @@ function categoryBody() {
       body: "Lorem ipsen......",
       author: "Khan",
       id: 3,
-      likes:2,
+      likes: 2,
     },
   ]);
 
@@ -47,7 +48,11 @@ function categoryBody() {
         Category : {id}
         <hr />
       </div>
-      <BlogContents blogs={blogs.filter((blog) => blog.category === id).sort((a,b) => b.likes - a.likes)} />
+      <BlogContents
+        blogs={blogs
+          .filter((blog) => blog.category === id)
+          .sort((a, b) => b.likes - a.likes)}
+      />
     </div>
   );
 }
