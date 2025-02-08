@@ -1,0 +1,17 @@
+[
+    {
+        "email": "test.nazim@gmail.com",
+        "username": "Nazim",
+        "password": 20220204026
+    },
+    {
+        "email": "test.yahya@gmail.com",
+        "username": "Yahya",
+        "password": 20220204004
+    },
+    {
+        "email": "test.dhruvo@gmail.com",
+        "username": "Dhruvo",
+        "password": 20220204003
+    }
+]
