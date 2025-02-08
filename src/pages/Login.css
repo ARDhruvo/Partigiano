@@ -1,3 +1,6 @@
+* {
+  overflow: auto;
+}
 .loginPage {
   font-family: "Times New Roman", Times, serif;
   line-height: 1.5;
@@ -12,7 +15,6 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow: hidden;
 
   color: hsla(0, 0%, 0%, 0.87);
   max-width: 1920px;
@@ -38,33 +40,43 @@ h2 {
   margin: 0;
 }
 
-.btnLog {
-  /* flex-wrap: ; */
-  margin-top: 2em;
-  padding: 0.6em 6.5em;
-  text-align: center;
+.btn,
+.inactBtn {
+  width: 15em; /* Set a fixed width for both buttons */
+  padding: 0.75em 0; /* Adjust vertical padding, set horizontal to 0 */
+  cursor: pointer;
+  font-size: 1rem; /* Set a consistent font size */
+  text-align: center; /* Ensure text is centered */
+  margin-top: 1em;
+  transition: background-color 0.3s ease; /* Smooth transition for hover effects */
 }
 
-.btnSign {
-  /* flex-wrap: ; */
-  margin-top: 2em;
-  padding: 0.6em 6.2em;
-  text-align: center;
-}
-
-.inactbtnLog {
-  padding: 0.6em 4.8em;
-  text-align: center;
-}
-
-.inactbtnSign {
-  padding: 0.6em 4.5em;
-  text-align: center;
-}
 .textbox {
   color: black;
-  margin-top: 1em;
-  margin-bottom: 1em;
+  width: 100%;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.MuiTextField-root {
+  /* margin-bottom: 0.5em !important; */
+}
+
+.MuiInputLabel-root {
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+.MuiOutlinedInput-root {
+  background-color: white;
+}
+
+.MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline {
+  border-color: #f44336;
+}
+
+.MuiFormHelperText-root.Mui-error {
+  color: #f44336;
 }
 
 @media only screen and (max-width: 400px) {
