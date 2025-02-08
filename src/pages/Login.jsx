@@ -2,51 +2,37 @@ import { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Field from "../components/Field";
 import { Link } from "react-router-dom";
+import { Formik, Form, /*Field,*/ ErrorMessage } from "formik";
+import * as Yup from "yup";
 import "./Login.css";
 
-function App() {
-  const [btn, setBtn] = useState("Log In");
-  const [inactBtn, setInactBtn] = useState("Sign Up Instead?");
-  const [loggedIn, setLogIn] = useState(true);
-  const [btnClass, setBtnClass] = useState("btnLog");
-  const [inactBtnClass, setinactBtnClass] = useState("inactbtnSign");
-  const [email, setEmail] = useState();
-  const [confirmPassword, setConfirmPassword] = useState();
-  const [btnSnippet, setBtnSnippet] = useState("/");
+function Login() {
+  const [isLogin, setIsLogin] = useState(true);
 
-  const swap = () => {
-    if (loggedIn) {
-      setLogIn(false);
-      setBtn("Sign Up");
-      setInactBtn("Log In Instead?");
-      setBtnClass("btnSign");
-      setinactBtnClass("inactbtnLog");
-      setEmail(<Field title="E-Mail" />);
-      setConfirmPassword(<Field title="Confirm Password" vis="password" />);
-      setBtnSnippet("/login");
-    } else {
-      setLogIn(true);
-      setBtn("Log In");
-      setInactBtn("Sign Up Instead?");
-      setBtnClass("btnLog");
-      setinactBtnClass("inactbtnSign");
-      setEmail();
-      setConfirmPassword();
-      setBtnSnippet("/");
-    }
+  const loginSchema = Yup.object().shape({
+    username: Yup.string().required("Username is required"),
+    password: Yup.string().required("Password is required"),
+  });
+
+  const signupSchema = Yup.object().shape({
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    username: Yup.string().required("Username is required"),
+    password: Yup.string()
+      .min(6, "Password must be at least 6 characters")
+      .required("Password is required"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password")], "Passwords must match")
+      .required("Confirm password is required"),
+  });
+
+  const handleSubmit = (values, { setSubmitting }) => {
+    // Handle form submission here
+    console.log(values);
+    setSubmitting(false);
   };
 
-  const checkLogIn = () => {
-    if (loggedIn == false) {
-      setLogIn(true);
-      setBtn("Log In");
-      setInactBtn("Sign Up Instead?");
-      setBtnClass("btnLog");
-      setinactBtnClass("inactbtnSign");
-      setEmail();
-      setConfirmPassword();
-      setBtnSnippet("/");
-    }
+  const toggleMode = () => {
+    setIsLogin(!isLogin);
   };
 
   return (
@@ -55,32 +41,91 @@ function App() {
         <header className="logPage">
           <h2>Welcome To</h2>
           <h1>PARTIGIANO</h1>
-          {/* Use Logo Later */}
           <hr />
         </header>
       </div>
-      <div className="textbox">{email}</div>
-      <div className="textbox">
-        <Field title="Username" />
-      </div>
-      <div className="textbox">
-        <Field title="Password" vis="password" />
-      </div>
-      <div className="textbox">{confirmPassword}</div>
+      <Formik
+        initialValues={{
+          email: "",
+          username: "",
+          password: "",
+          confirmPassword: "",
+        }}
+        validationSchema={isLogin ? loginSchema : signupSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ isSubmitting }) => (
+          <Form>
+            {!isLogin && (
+              <div className="textbox">
+                <Field
+                  title="E-Mail"
+                  type="email"
+                  name="email"
+                  placeholder="E-Mail"
+                />
+                <ErrorMessage name="email" component="div" className="error" />
+              </div>
+            )}
+            <div className="textbox">
+              <Field
+                title="Username"
+                type="text"
+                name="username"
+                placeholder="Username"
+              />
+              <ErrorMessage name="username" component="div" className="error" />
+            </div>
+            <div className="textbox">
+              <Field
+                title="Password"
+                vis="password"
+                type="password"
+                name="password"
+                placeholder="Password"
+              />
+              <ErrorMessage name="password" component="div" className="error" />
+            </div>
+            {!isLogin && (
+              <div className="textbox">
+                <Field
+                  title="Confirm Password"
+                  vis="password"
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="Confirm Password"
+                />
+                <ErrorMessage
+                  name="confirmPassword"
+                  component="div"
+                  className="error"
+                />
+              </div>
+            )}
+            <div>
+              <Link to="/">
+                <button
+                  type="submit"
+                  className={isLogin ? "btnLog" : "btnSign"}
+                  /*disabled={isSubmitting}*/
+                >
+                  {isLogin ? "Log In" : "Sign Up"}
+                </button>
+              </Link>
+            </div>
+          </Form>
+        )}
+      </Formik>
       <div>
-        <Link to={btnSnippet}>
-          <button className={btnClass} onClick={checkLogIn}>
-            {btn}
-          </button>
-        </Link>
-      </div>
-      <div>
-        <button className={inactBtnClass} onClick={swap}>
-          {inactBtn}
+        <button
+          className={isLogin ? "inactbtnSign" : "inactbtnLog"}
+          onClick={toggleMode}
+        >
+          {isLogin ? "Sign Up Instead?" : "Log In Instead?"}
         </button>
       </div>
     </div>
   );
 }
 
-export default App;
+export default Login;
