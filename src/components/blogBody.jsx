@@ -52,7 +52,7 @@ function BlogBody() {
         .map((content) => (
           <div key={content.id} className="post-container">
             <Contents contents={[content]} />
-            <div className="button-container">
+            <div className="button-container" style={{ marginLeft: "40px" }}>
               <button className="like-button" onClick={() => handleLike(content.id)}>
                 Like ({content.likes})
               </button>
