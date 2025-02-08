@@ -27,6 +27,13 @@ function BlogBody() {
       id: "3",
       likes: 0,
     },
+    {
+      title: "Hello Emergency2",
+      body: "Lorem ipsen......",
+      author: "NRK",
+      id: "4",
+      likes: 4,
+    },
   ]);
 
   const handleLike = (postId) => {

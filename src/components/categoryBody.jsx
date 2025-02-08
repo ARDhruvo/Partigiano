@@ -13,13 +13,23 @@ function categoryBody() {
       body: "Lorem ipsen......",
       author: "Nazim",
       id: 1,
+      likes:2,
     },
     {
       category: "Emergency",
-      title: "Hello Emergency",
+      title: "Hello Emergency1",
       body: "Lorem ipsen......",
       author: "Raian",
       id: 2,
+      likes:2,
+    },
+    {
+      category: "Emergency",
+      title: "Hello Emergency2",
+      body: "Lorem ipsen......",
+      author: "NRK",
+      id: 4,
+      likes:4,
     },
     {
       category: "Education2",
@@ -27,6 +37,7 @@ function categoryBody() {
       body: "Lorem ipsen......",
       author: "Khan",
       id: 3,
+      likes:2,
     },
   ]);
 
@@ -36,7 +47,7 @@ function categoryBody() {
         Category : {id}
         <hr />
       </div>
-      <BlogContents blogs={blogs.filter((blog) => blog.category === id)} />
+      <BlogContents blogs={blogs.filter((blog) => blog.category === id).sort((a,b) => b.likes - a.likes)} />
     </div>
   );
 }
