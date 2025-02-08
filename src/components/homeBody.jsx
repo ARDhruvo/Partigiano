@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import CategoryContents from "./categoryContents";
+import "./home.css";
 
 function homeBody() {
   const [categories, setCategory] = useState([
@@ -35,12 +36,10 @@ function homeBody() {
           type="text"
           placeholder="Search categories..."
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)} 
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
       <CategoryContents categories={filteredCategories} />
-
-      
     </div>
   );
 }

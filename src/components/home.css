@@ -1,0 +1,114 @@
+/* home.css */
+
+/* General Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+body {
+  font-family: "Times New Roman", Times, serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: hsla(0, 0%, 0%, 0.87);
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header Styles */
+.header {
+  display: flex;
+  justify-content: space-between; /* Space items evenly */
+  align-items: center; /* Align items vertically in the center */
+  padding: 1rem 2rem;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  border-bottom: 1px solid hsla(0, 0%, 0%, 0.87);
+  z-index: 1000;
+}
+
+.header-logo h3 {
+  font-size: 3rem; /* Adjusted font size */
+  font-weight: bold;
+  color: #000000;
+  margin: 0; /* Remove margin to align properly */
+}
+
+.header-logo a {
+  text-decoration: none;
+}
+
+.headerbtn {
+  display: flex;
+  gap: 1rem; /* Space between buttons */
+  align-items: center; /* Align buttons vertically in the center */
+}
+
+.headerbtn button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease;
+  white-space: nowrap; /* Prevents text from wrapping */
+}
+
+.headerbtn button:active {
+  transform: translateY(1px);
+}
+
+/* Responsive Styles */
+@media only screen and (max-width: 768px) {
+  .header {
+    padding: 1rem;
+  }
+
+  .header-logo h3 {
+    font-size: 1.5rem; /* Adjusted font size for smaller screens */
+  }
+
+  .headerbtn {
+    gap: 0.5rem; /* Reduce gap for smaller screens */
+  }
+
+  .headerbtn button {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .header {
+    flex-direction: row; /* Ensure items remain in a row */
+    align-items: center;
+    justify-content: space-between; /* Space items evenly */
+    padding: 0.5rem;
+  }
+
+  .header-logo h3 {
+    font-size: 1.25rem; /* Further reduce font size for very small screens */
+  }
+
+  .headerbtn {
+    gap: 0.25rem; /* Further reduce gap for very small screens */
+  }
+
+  .headerbtn button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  /* Home content */
+  .home-content {
+    max-width: 100%;
+    padding-left: 0;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
