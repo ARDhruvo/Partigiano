@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import Contents from "./contents";
-import { useState } from "react";
 
-function blogBody() {
+function BlogBody() {
   const { id } = useParams();
 
   const [contents, setContents] = useState([
@@ -12,26 +11,51 @@ function blogBody() {
       body: "Lorem ipsen......",
       author: "Nazim",
       id: "1",
+      likes: 0,
     },
     {
       title: "Hello Emergency",
       body: "Lorem ipsen......",
       author: "Raian",
       id: "2",
+      likes: 0,
     },
     {
       title: "Hello Education1",
       body: "Lorem ipsen......",
       author: "Khan",
       id: "3",
+      likes: 0,
     },
   ]);
 
+  const handleLike = (postId) => {
+    setContents((prevContents) =>
+      prevContents.map((content) =>
+        content.id === postId ? { ...content, likes: content.likes + 1 } : content
+      )
+    );
+  };
+
   return (
     <div className="homeTitle">
-      <Contents contents={contents.filter((content) => content.id === id)} />
+      {contents
+        .filter((content) => content.id === id)
+        .map((content) => (
+          <div key={content.id} className="post-container">
+            <Contents contents={[content]} />
+            <div className="button-container">
+              <button className="like-button" onClick={() => handleLike(content.id)}>
+                Like ({content.likes})
+              </button>
+              <button className="report-button" style={{ marginLeft: "10px" }}>
+                Report
+              </button>
+            </div>
+          </div>
+        ))}
     </div>
   );
 }
 
-export default blogBody;
+export default BlogBody;

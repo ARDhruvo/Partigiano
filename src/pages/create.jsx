@@ -12,6 +12,17 @@ function CreatePost() {
     console.log("Post Submitted:", { title, category, content });
   };
 
+  const textAreaStyle = {
+    width: "90%",
+    padding: "0.5rem",
+    border: "1px solid #ccc",
+    borderRadius: "4px",
+    marginBottom: "1rem",
+    resize: "none",
+    fontSize: "1rem",
+    display: "block"
+  };
+
   return (
     <>
       <Header />
@@ -25,7 +36,7 @@ function CreatePost() {
               type="text" 
               value={title} 
               onChange={(e) => setTitle(e.target.value)} 
-              style={{ display: "block", width: "100%", padding: "10px", marginTop: "5px" }} 
+              style={textAreaStyle} 
               placeholder="Enter your post title..."
             />
           </label>
@@ -35,7 +46,7 @@ function CreatePost() {
             <select 
               value={category} 
               onChange={(e) => setCategory(e.target.value)} 
-              style={{ display: "block", width: "100%", padding: "10px", marginTop: "5px" }}>
+              style={textAreaStyle}>
               <option value="">-- Choose a category --</option>
               <option value="Technology">Technology</option>
               <option value="Health">Health</option>
@@ -50,14 +61,12 @@ function CreatePost() {
               value={content} 
               onChange={(e) => setContent(e.target.value)} 
               rows="6" 
-              style={{ display: "block", width: "100%", padding: "10px", marginTop: "5px" }} 
+              style={textAreaStyle} 
               placeholder="Share your thoughts..."
             />
           </label>
           
-          <button style={{ padding: "10px 20px",  }}>
-          Post
-        </button>
+          <button style={{ padding: "10px 20px" }}>Post</button>
         </form>
       </div>
     </>
