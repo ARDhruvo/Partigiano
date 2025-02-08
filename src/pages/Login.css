@@ -29,6 +29,7 @@
 
 header.logPage {
   margin-top: 2.5em;
+  margin-bottom: 2rem; /* Add some space below the header */
 }
 
 h1 {
@@ -49,6 +50,16 @@ h2 {
   text-align: center; /* Ensure text is centered */
   margin-top: 1em;
   transition: background-color 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.btn:hover,
+.inactBtn:hover {
+  transform: translateY(-1px);
+}
+
+.btn:active,
+.inactBtn:active {
+  transform: translateY(1px);
 }
 
 .textbox {
@@ -78,9 +89,20 @@ h2 {
 .MuiFormHelperText-root.Mui-error {
   color: #f44336;
 }
-
 @media only screen and (max-width: 400px) {
   .loginPage {
     overflow: visible;
+    padding: 0.5rem;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+  .btn,
+  .inactBtn {
+    font-size: 0.9rem;
+    padding: 0.6rem 0;
+  }
+  .textbox {
+    max-width: 100%;
   }
 }
