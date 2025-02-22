@@ -1,6 +1,8 @@
+"use client";
+
 import { useState } from "react";
 import TextField from "@mui/material/TextField";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import "./Login.css";
@@ -19,28 +21,40 @@ function Login() {
     username: Yup.string().required("Username is required"),
     password: Yup.string()
       .min(6, "Password must be at least 6 characters")
+      .matches(
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/,
+        "Password must contain at least one number and one special character"
+      )
       .required("Password is required"),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password")], "Passwords must match")
       .required("Confirm password is required"),
   });
 
-  const handleSubmit = (values, { setSubmitting, setErrors }) => {
-    if (isLogin) {
-      if (values.username && values.password) {
-        // Handle successful login here
-        // console.log(values);
+  const handleSubmit = async (values, { setSubmitting, setErrors }) => {
+    try {
+      const response = await fetch(`/api/${isLogin ? "login" : "signup"}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Handle successful login/signup
         navigate("/");
       } else {
-        setErrors({
-          username: !values.username ? "Username is required" : undefined,
-          password: !values.password ? "Password is required" : undefined,
-        });
+        // Handle errors
+        setErrors({ submit: data.message });
       }
-    } else {
-      // Handle signup logic here
-      console.log(values);
+    } catch (error) {
+      console.error("Error:", error);
+      setErrors({ submit: "An error occurred. Please try again." });
     }
+
     setSubmitting(false);
   };
 
@@ -139,18 +153,11 @@ function Login() {
                 </Field>
               </div>
             )}
+            {errors.submit && <div className="error">{errors.submit}</div>}
             <div>
-              {isLogin && values.username && values.password ? (
-                <Link to="/">
-                  <button type="submit" className="btn">
-                    Log In
-                  </button>
-                </Link>
-              ) : (
-                <button type="submit" className="btn">
-                  {isLogin ? "Log In" : "Sign Up"}
-                </button>
-              )}
+              <button type="submit" className="btn" disabled={isSubmitting}>
+                {isLogin ? "Log In" : "Sign Up"}
+              </button>
             </div>
           </Form>
         )}

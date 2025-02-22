@@ -1,53 +1,59 @@
 import jwt from "jsonwebtoken";
 
 export const validateSignup = (req, res, next) => {
-  const {
-    fullName,
-    username,
-    email,
-    password,
-    confirmPassword,
-    phoneNumber,
-    presentAddress,
-  } = req.body;
+  const { email, username, password, confirmPassword } = req.body;
 
-  if (
-    !fullName ||
-    !username ||
-    !email ||
-    !password ||
-    !confirmPassword ||
-    !phoneNumber ||
-    !presentAddress
-  ) {
+  if (!email || !username || !password || !confirmPassword) {
     return res.status(400).json({ message: "All fields are required" });
+  }
+
+  // Email validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res.status(400).json({ message: "Invalid email format" });
+  }
+
+  // Username validation
+  if (username.length < 3) {
+    return res
+      .status(400)
+      .json({ message: "Username must be at least 3 characters long" });
+  }
+
+  // Password validation
+  const passwordRegex =
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/;
+  if (!passwordRegex.test(password)) {
+    return res.status(400).json({
+      message:
+        "Password must be at least 6 characters long, contain at least one number and one special character",
+    });
   }
 
   if (password !== confirmPassword) {
     return res.status(400).json({ message: "Passwords do not match" });
   }
 
-  next(); // Move to the next function (controller)
+  next();
 };
 
 export const validateLogin = (req, res, next) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
-  if (!email || !password) {
-    return res.status(400).json({ message: "Email and Password are required" });
+  if (!username || !password) {
+    return res
+      .status(400)
+      .json({ message: "Username and Password are required" });
   }
 
-  next(); // Move to the next function (controller)
+  next();
 };
 
 export const authenticateUser = (req, res, next) => {
   const authHeader = req.header("Authorization");
-  console.log("Auth Header:", authHeader); // Debugging full Authorization header
-
   const token = authHeader?.startsWith("Bearer ")
     ? authHeader.split(" ")[1]
     : null;
-  console.log("Extracted Token:", token); // Debugging extracted token
 
   if (!token) {
     return res.status(401).json({ message: "Authentication required" });
@@ -56,7 +62,6 @@ export const authenticateUser = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
-    console.log("Decoded Token:", decoded); // Debugging decoded token
     next();
   } catch (error) {
     console.error("JWT Verification Error:", error);

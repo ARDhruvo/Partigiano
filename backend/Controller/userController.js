@@ -1,5 +1,3 @@
-// controllers/userController.js
-
 import User from "../Model/user.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
@@ -10,7 +8,9 @@ const generateAccessToken = (user) => {
   return jwt.sign(
     { id: user._id, username: user.username, email: user.email },
     process.env.JWT_SECRET,
-    { expiresIn: "1h" }
+    {
+      expiresIn: "1h",
+    }
   );
 };
 
@@ -22,8 +22,7 @@ const generateRefreshToken = (user) => {
 
 // User Signup Controller
 export const signupUser = async (req, res) => {
-  const { fullName, username, email, password, phoneNumber, presentAddress } =
-    req.body;
+  const { username, email, password } = req.body;
 
   try {
     const existingUser = await User.findOne({ $or: [{ username }, { email }] });
@@ -34,12 +33,9 @@ export const signupUser = async (req, res) => {
     }
 
     const newUser = new User({
-      fullName,
       username,
       email,
       password,
-      phoneNumber,
-      presentAddress,
     });
 
     await newUser.save();
