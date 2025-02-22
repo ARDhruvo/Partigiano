@@ -57,17 +57,17 @@ export const signupUser = async (req, res) => {
 
 // User Login Controller
 export const loginUser = async (req, res) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ username });
     if (!user) {
       return res.status(400).json({ message: "Invalid Email or Password" });
     }
 
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
-      return res.status(400).json({ message: "Invalid Email or Password" });
+      return res.status(400).json({ message: "Invalid Username or Password" });
     }
 
     const accessToken = generateAccessToken(user);
