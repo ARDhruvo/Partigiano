@@ -8,6 +8,12 @@ import * as Yup from "yup";
 import "./Login.css";
 
 function Login() {
+  const [values, setValues] = useState({
+    email: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
+  });
   const [isLogin, setIsLogin] = useState(true);
   const navigate = useNavigate();
 
@@ -33,13 +39,16 @@ function Login() {
 
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
-      const response = await fetch(`/api/${isLogin ? "login" : "signup"}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
+      const response = await fetch(
+        `http://localhost:4000/login/auth/${isLogin ? "login" : "signup"}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        }
+      );
 
       const data = await response.json();
 
