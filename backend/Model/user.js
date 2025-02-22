@@ -1,15 +1,14 @@
-// models/User.js
-
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
 const userSchema = new mongoose.Schema(
   {
-    fullName: {
+    email: {
       type: String,
-      required: [true, "Full Name is required"],
+      required: [true, "Email is required"],
+      unique: true,
       trim: true,
-      minlength: [3, "Full Name must be at least 3 characters long"],
+      match: [/.+@.+\..+/, "Please enter a valid email address"],
     },
     username: {
       type: String,
@@ -18,27 +17,13 @@ const userSchema = new mongoose.Schema(
       trim: true,
       minlength: [3, "Username must be at least 3 characters long"],
     },
-    email: {
-      type: String,
-      required: [true, "Email is required"],
-      unique: true,
-      trim: true,
-      match: [/.+@.+\..+/, "Please enter a valid email address"],
-    },
     password: {
       type: String,
       required: [true, "Password is required"],
       minlength: [6, "Password must be at least 6 characters long"],
     },
-    phoneNumber: {
+    otp: {
       type: String,
-      required: [true, "Phone Number is required"],
-      match: [/^\+?[0-9]{7,15}$/, "Please enter a valid phone number"],
-    },
-    presentAddress: {
-      type: String,
-      required: [true, "Present Address is required"],
-      trim: true,
     },
   },
   {
