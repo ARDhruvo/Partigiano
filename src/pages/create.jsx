@@ -1,14 +1,47 @@
 import { useState } from 'react';
 import React from 'react';
 import Header from '../components/header';
+//import axiosInstance from '../utils/axiosInstance';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import toast from "react-hot-toast";
 
 function CreatePost() {
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [content, setContent] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (!title || !content || !category) {
+      alert("All fields are required!");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const response = await axios.post("http://localhost:4000/posts", {
+        title,
+        body: content,
+        category,
+        author: "NRK"//user?.username, // Assign the logged-in user as the author
+      });
+      const {data} = response;
+      toast.success("Post Created Successfully");
+
+      setTimeout(()=>{
+        navigate("/");
+      },1000);
+
+    } catch (err) {
+      console.error("Error creating post:", err);
+    }finally{
+      setLoading(false)
+    }
+
     console.log("Post Submitted:", { title, category, content });
   };
 
@@ -66,7 +99,9 @@ function CreatePost() {
             />
           </label>
           
-          <button style={{ padding: "10px 20px" }}>Post</button>
+          <button type="submit" disabled={loading} style={{ padding: "10px 20px" }}>
+            {loading ? "Posting" : "Post"}
+            </button>
         </form>
       </div>
     </>
