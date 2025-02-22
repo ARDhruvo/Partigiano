@@ -1,58 +1,44 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
+import axios from "axios";
 import BlogContents from "./blogContents";
 import { useParams } from "react-router-dom";
 import "./home.css";
 
 function categoryBody() {
-  const { id } = useParams();
+  const { category } = useParams();
 
-  const [blogs, setBlogs] = useState([
-    {
-      category: "Education",
-      title: "Hello Education",
-      body: "Lorem ipsen......",
-      author: "Nazim",
-      id: 1,
-      likes: 2,
-    },
-    {
-      category: "Emergency",
-      title: "Hello Emergency1",
-      body: "Lorem ipsen......",
-      author: "Raian",
-      id: 2,
-      likes: 2,
-    },
-    {
-      category: "Emergency",
-      title: "Hello Emergency2",
-      body: "Lorem ipsen......",
-      author: "NRK",
-      id: 4,
-      likes: 4,
-    },
-    {
-      category: "Education2",
-      title: "Hello Education1",
-      body: "Lorem ipsen......",
-      author: "Khan",
-      id: 3,
-      likes: 2,
-    },
-  ]);
+  const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchCategoryBlogs = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`http://localhost:4000/posts/${category}`); //${category}
+        setBlogs(response.data);
+      } catch (error) {
+        console.error("Error fetching category blogs:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategoryBlogs();
+  }, [category]);
+
 
   return (
     <div className="home-content">
       <div className="homeTitle">
-        Category : {id}
+        Category : {category}
         <hr />
       </div>
+      
       <BlogContents
-        blogs={blogs
-          .filter((blog) => blog.category === id)
-          .sort((a, b) => b.likes - a.likes)}
+        blogs={blogs}
       />
+      
     </div>
   );
 }

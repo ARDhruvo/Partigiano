@@ -83,7 +83,7 @@ function CreatePost() {
               <option value="">-- Choose a category --</option>
               <option value="Technology">Technology</option>
               <option value="Health">Health</option>
-              <option value="Lifestyle">Lifestyle</option>
+              <option value="Emergency">Emergency</option>
               <option value="Education">Education</option>
             </select>
           </label>

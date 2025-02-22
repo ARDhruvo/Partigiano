@@ -11,9 +11,9 @@ function homeBody() {
     },
     { title: "Emergency", body: "Post anything urgent", id: "Emergency" },
     {
-      title: "Education2",
+      title: "Health",
       body: "Post anything related to your study",
-      id: "Education2",
+      id: "Health",
     },
   ]);
 

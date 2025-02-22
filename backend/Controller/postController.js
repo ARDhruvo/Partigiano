@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { useParams } from "react-router-dom";
 
 const postSchema = new mongoose.Schema({
     title: String,
@@ -42,6 +43,16 @@ export const createPost = async (req, res) => {
       res.json(post);
     } catch (err) {
       res.status(500).json({ message: "Server error" });
+    }
+  };
+
+  export const getPostByCat = async (req, res) => {
+    try {
+        const {category} = req.params;
+      const posts = await Post.find({ category: category });
+      res.json(posts);
+    } catch (err) {
+      res.status(500).json({ error: "Failed to fetch category posts" });
     }
   };
 

@@ -6,8 +6,9 @@ function blogContents(props) {
   return (
     <div className="blog-contents">
       {blogs.map((blog) => (
-        <Link to={`/blog/${blog.id}`}>
-          <div className="category-preview" key={blog.id}>
+        console.log(blog._id),
+        <Link to={`/blog/${blog._id}`}>
+          <div className="category-preview" key={blog._id}>
           <h2>{blog.title}</h2>
           <p>Written by {blog.author}</p>
         </div>
