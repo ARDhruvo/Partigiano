@@ -6,6 +6,7 @@ import {
   getAllPost,
   getPost,
   getPostByCat,
+  getUserPosts,
 } from "../Controller/postController.js";
 
 const postRouter = express.Router();
@@ -21,6 +22,9 @@ postRouter.post("/", createPost);
 //router.put("/:id", checkToken, updatedUser);
 
 postRouter.delete("/:id", deletePost);
+
+postRouter.get("/profile/:username", getUserPosts);
+
 
 //router.delete("/", checkToken, deleteAllUsers);
 

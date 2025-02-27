@@ -1,24 +1,47 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/header";
+import Contents from "../components/blogContents"; 
+import axios from "axios";
 
-function profile() {
-  const user = {
-    name: "Mohammad Yahya",
-    username: "Yahya355",
-    bio: "“How will we ever get out of this labyrinth of suffering?” ",
-    avatar:
-      "https://scontent.fdac27-2.fna.fbcdn.net/v/t39.30808-6/473080810_3424687591013849_3202325898518874554_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeG0A2fZY6NzrObnN3px2mkxiFku6-PZdlyIWS7r49l2XDQvO1sU3iLELj5SgftCIXE_tHH1byrR_s2bsftUOxyn&_nc_ohc=I8pWpptdvzgQ7kNvgFUxY6O&_nc_zt=23&_nc_ht=scontent.fdac27-2.fna&_nc_gid=ADXQ7VnZfQJbx01t_V4j6PB&oh=00_AYBsFZWXGRFE6J37pP4cYOhLwZzLtfDfXOgAIztOXqSZUw&oe=679A617D",
-    posts: [
-      { id: 1, title: "My First Post", content: "Hello world!" },
-      { id: 2, title: "My second Post", content: "The world is beautiful!" },
-      {
-        id: 3,
-        title: "My third Post",
-        content:
-          "It's my experience that people are a lot more sympathetic if they can see you hurting, and for the millionth time in my life I wish for measles or smallpox or some other easily understood disease just to make it easier on me and also on them.",
-      },
-    ],
-  };
+function Profile() {
+  const [user, setUser] = useState([]);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        setLoading(true);
+
+        // Get user data (assuming user info is stored in localStorage)
+        const storedUser = JSON.parse(localStorage.getItem("user"));
+        if (!storedUser || !storedUser.username) {
+          console.error("No user found in local storage");
+          setLoading(false);
+          return;
+        }
+
+        const username = storedUser.username;
+
+        // Fetch user details
+        const userResponse = await axios.get(`http://localhost:4000/user/${username}`);
+        setUser(userResponse.data);
+
+        // Fetch user posts
+        const postsResponse = await axios.get(`http://localhost:4000/posts/profile/${username}`);
+        setPosts(postsResponse.data);
+      } catch (error) {
+        console.error("Error fetching profile data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfileData();
+  }, []);
+
+  if (loading) return <p>Loading...</p>;
+  if (!user) return <p>User not found</p>;
 
   return (
     <div>
@@ -33,17 +56,28 @@ function profile() {
         <p>@{user.username}</p>
         <p>{user.bio}</p>
       </div>
+
+      {/* Display User's Blog Posts */}
       <div className="home-content">
-        <h3>Posts</h3>
-        {user.posts.map((post) => (
-          <div key={post.id} className="category-preview">
-            <h4>{post.title}</h4>
-            <p>{post.content}</p>
-          </div>
-        ))}
+        <h3>My Blogs</h3>
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <div key={post._id} className="post-container">
+              <Contents contents={post} />
+              <div className="button-container" style={{ marginLeft: "40px" }}>
+                <button className="like-button">Like ({post.likes})</button>
+                <button className="report-button" style={{ marginLeft: "10px" }}>
+                  Report
+                </button>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>No blogs posted yet.</p>
+        )}
       </div>
     </div>
   );
 }
 
-export default profile;
+export default Profile;
