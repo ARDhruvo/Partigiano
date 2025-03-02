@@ -53,10 +53,14 @@ function Login() {
       const data = await response.json();
 
       if (response.ok) {
-        // Handle successful login/signup
-        navigate("/");
+        if (isLogin) {
+          navigate("/"); // Navigate to Home.jsx
+        } else {
+          navigate("/verify"); // Navigate to Verify.jsx after signup
+        }
+      } else if (response.status === 403 && data.redirectTo === "/verify") {
+        navigate("/verify"); // Redirect to verification page if account is not verified
       } else {
-        // Handle errors
         setErrors({ submit: data.message });
       }
     } catch (error) {

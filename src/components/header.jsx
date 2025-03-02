@@ -1,12 +1,47 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+"use client";
+
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./home.css";
 
 function Header() {
-  const [addPath, setAddPath] = useState("/create");
-  const [btn1Name, setBtn1Name] = useState("About");
-  const [btn2Name, setBtn2Name] = useState("Login");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check for the presence of an access token in cookies
+    const checkAuthStatus = () => {
+      const cookies = document.cookie.split(";");
+      const accessTokenCookie = cookies.find((cookie) =>
+        cookie.trim().startsWith("accessToken=")
+      );
+      setIsLoggedIn(!!accessTokenCookie);
+    };
+
+    checkAuthStatus();
+    // You might want to set up an interval to periodically check the auth status
+    const interval = setInterval(checkAuthStatus, 60000); // Check every minute
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("http://localhost:4000/login/auth/logout", {
+        method: "POST",
+        credentials: "include", // This is important to include cookies in the request
+      });
+
+      if (response.ok) {
+        setIsLoggedIn(false);
+        navigate("/login");
+      } else {
+        console.error("Logout failed");
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
 
   return (
     <div className="header">
@@ -16,15 +51,21 @@ function Header() {
         </Link>
       </div>
       <div className="headerbtn">
-        <Link to={addPath}>
-          <button>Add</button>
-        </Link>
-        <Link to="/aboutus">
-          <button>{btn1Name}</button>
-        </Link>
-        <Link to="/login">
-          <button>{btn2Name}</button>
-        </Link>
+        {isLoggedIn ? (
+          <>
+            <Link to="/create">
+              <button>Add Post</button>
+            </Link>
+            <Link to="/profile">
+              <button>Profile</button>
+            </Link>
+            <button onClick={handleLogout}>Logout</button>
+          </>
+        ) : (
+          <Link to="/login">
+            <button>Login</button>
+          </Link>
+        )}
       </div>
     </div>
   );

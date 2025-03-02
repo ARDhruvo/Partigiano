@@ -1,46 +1,60 @@
-"use client"
-import TextField from "@mui/material/TextField"
-import { useNavigate } from "react-router-dom"
-import { Formik, Form, Field } from "formik"
-import * as Yup from "yup"
-import "./Login.css"
+"use client";
+import { useState, useEffect } from "react";
+import TextField from "@mui/material/TextField";
+import { useNavigate, useLocation } from "react-router-dom";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
+import "./Login.css";
 
 function OTPVerification() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    // Get email from location state
+    const emailFromState = location.state?.email;
+    if (emailFromState) {
+      setEmail(emailFromState);
+    }
+  }, [location]);
 
   const otpSchema = Yup.object().shape({
     otp: Yup.string()
       .matches(/^[0-9]+$/, "OTP must be only digits")
       .length(6, "OTP must be exactly 6 digits")
       .required("OTP is required"),
-  })
+  });
 
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
-      const response = await fetch("http://localhost:4000/login/auth/verify-otp", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      })
+      const response = await fetch(
+        "http://localhost:4000/login/auth/verifyotp",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ...values, email }),
+        }
+      );
 
-      const data = await response.json()
+      const data = await response.json();
 
       if (response.ok) {
         // Handle successful verification
-        navigate("/")
+        navigate("/login");
       } else {
         // Handle errors
-        setErrors({ submit: data.message })
+        setErrors({ submit: data.message });
       }
     } catch (error) {
-      console.error("Error:", error)
-      setErrors({ submit: "An error occurred. Please try again." })
+      console.error("Error:", error);
+      setErrors({ submit: "An error occurred. Please try again." });
     }
 
-    setSubmitting(false)
-  }
+    setSubmitting(false);
+  };
 
   return (
     <div className="loginPage">
@@ -93,8 +107,7 @@ function OTPVerification() {
         </button>
       </div>
     </div>
-  )
+  );
 }
 
-export default OTPVerification
-
+export default OTPVerification;
