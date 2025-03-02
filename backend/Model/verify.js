@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
-const userSchema = new mongoose.Schema(
+const authSchema = new mongoose.Schema(
   {
     email: {
       type: String,
@@ -22,9 +22,8 @@ const userSchema = new mongoose.Schema(
       required: [true, "Password is required"],
       minlength: [6, "Password must be at least 6 characters long"],
     },
-    accStatus: {
+    otp: {
       type: String,
-      default: "pending",
     },
   },
   {
@@ -33,7 +32,7 @@ const userSchema = new mongoose.Schema(
 );
 
 // Password hashing middleware
-userSchema.pre("save", async function (next) {
+authSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   try {
     const salt = await bcrypt.genSalt(10);
@@ -45,10 +44,10 @@ userSchema.pre("save", async function (next) {
 });
 
 // Method to compare entered password with hashed password
-userSchema.methods.comparePassword = async function (candidatePassword) {
+authSchema.methods.comparePassword = async function (candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };
 
-const User = mongoose.model("User", userSchema);
+const Verify = mongoose.model("Auth", authSchema);
 
-export default User;
+export default Verify;

@@ -1,4 +1,4 @@
-import User from "../models/user.js";
+import User from "../Model/verify.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
@@ -76,12 +76,10 @@ export const login = async (req, res) => {
       path: "/",
     });
 
-    return res
-      .status(200)
-      .json({
-        message: "Login successful",
-        user: { id: user._id, username: user.username, email: user.email },
-      });
+    return res.status(200).json({
+      message: "Login successful",
+      user: { id: user._id, username: user.username, email: user.email },
+    });
   } catch (error) {
     console.error("Login Error:", error);
     return res.status(500).json({ message: "Server error" });
