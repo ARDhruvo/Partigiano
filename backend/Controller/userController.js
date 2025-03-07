@@ -67,12 +67,12 @@ export const signupUser = async (req, res) => {
 
     await verifyUser.save();
 
-    // Send OTP email
+    // Send OTP email with the required message format
     await transporter.sendMail({
       from: process.env.SENDER,
       to: email,
       subject: "Verify your account",
-      text: `Your OTP is: ${otp}`,
+      text: `Your OTP is ${otp}`,
     });
 
     res.status(201).json({
@@ -113,7 +113,7 @@ export const loginUser = async (req, res) => {
         from: process.env.SENDER,
         to: user.email,
         subject: "Verify your account",
-        text: `Your new OTP is: ${otp}`,
+        text: `Your OTP is: ${otp}`,
       });
 
       return res.status(403).json({
@@ -132,6 +132,7 @@ export const loginUser = async (req, res) => {
       secure: true,
       sameSite: "None",
       maxAge: 60 * 60 * 1000, // 1 hour
+      path: "/",
     });
 
     // Set refresh token in cookie
@@ -140,6 +141,7 @@ export const loginUser = async (req, res) => {
       secure: true,
       sameSite: "None",
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      path: "/",
     });
 
     res.status(200).json({
@@ -164,7 +166,10 @@ export const verifyOTP = async (req, res) => {
       return res.status(400).json({ message: "Invalid OTP" });
     }
 
+    // Update user status to verified
     await User.findOneAndUpdate({ email }, { accStatus: "verified" });
+
+    // Delete the verification entry from the database
     await Verify.findOneAndDelete({ email });
 
     res.status(200).json({ message: "Account verified successfully" });
@@ -213,6 +218,7 @@ export const refreshToken = (req, res) => {
       secure: true,
       sameSite: "None",
       maxAge: 60 * 60 * 1000, // 1 hour
+      path: "/",
     });
 
     res.status(200).json({ accessToken: newAccessToken });
