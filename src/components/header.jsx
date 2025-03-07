@@ -9,38 +9,48 @@ function Header() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const token = localStorage.getItem("accessToken"); // change to accessToken later
+
+    if (token) {
+      setIsLoggedIn(true);
+    }
     // Check for the presence of an access token in cookies
-    const checkAuthStatus = () => {
-      const cookies = document.cookie.split(";");
-      const accessTokenCookie = cookies.find((cookie) =>
-        cookie.trim().startsWith("accessToken=")
-      );
-      setIsLoggedIn(!!accessTokenCookie);
-    };
+    // const checkAuthStatus = () => {
+    //   const cookies = document.cookie.split(";");
+    //   const accessTokenCookie = cookies.find((cookie) =>
+    //     cookie.trim().startsWith("accessToken=")
+    //   );
+    //   setIsLoggedIn(!!accessTokenCookie);
+    // };
 
-    checkAuthStatus();
-    // You might want to set up an interval to periodically check the auth status
-    const interval = setInterval(checkAuthStatus, 60000); // Check every minute
+    // checkAuthStatus();
+    // // You might want to set up an interval to periodically check the auth status
+    // const interval = setInterval(checkAuthStatus, 60000); // Check every minute
 
-    return () => clearInterval(interval);
-  }, []);
+    // return () => clearInterval(interval);
+  });
 
   const handleLogout = async () => {
-    try {
-      const response = await fetch("http://localhost:4000/login/auth/logout", {
-        method: "POST",
-        credentials: "include", // This is important to include cookies in the request
-      });
+    localStorage.clear();
+    setIsLoggedIn(false);
 
-      if (response.ok) {
-        setIsLoggedIn(false);
-        navigate("/login");
-      } else {
-        console.error("Logout failed");
-      }
-    } catch (error) {
-      console.error("Logout error:", error);
-    }
+    navigate("/");
+
+    // try {
+    //   const response = await fetch("http://localhost:4000/login/auth/logout", {
+    //     method: "POST",
+    //     credentials: "include", // This is important to include cookies in the request
+    //   });
+
+    //   if (response.ok) {
+    //     setIsLoggedIn(false);
+    //     navigate("/login");
+    //   } else {
+    //     console.error("Logout failed");
+    //   }
+    // } catch (error) {
+    //   console.error("Logout error:", error);
+    // }
   };
 
   return (
