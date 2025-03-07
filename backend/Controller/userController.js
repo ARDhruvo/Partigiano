@@ -126,6 +126,8 @@ export const loginUser = async (req, res) => {
     const accessToken = generateAccessToken(user);
     const refreshToken = generateRefreshToken(user);
 
+    // res.json(accessToken);
+
     // Set access token in cookie
     res.cookie("accessToken", accessToken, {
       httpOnly: true,

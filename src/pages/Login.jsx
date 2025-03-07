@@ -51,9 +51,11 @@ function Login() {
       );
 
       const data = await response.json();
+      console.log(data);
 
       if (response.ok) {
         if (isLogin) {
+          localStorage.setItem("accessToken", data.accessToken);
           // Store tokens in cookies (handled by backend)
           navigate("/"); // Navigate to Home.jsx
         } else {
