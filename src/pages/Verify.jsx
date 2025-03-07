@@ -1,23 +1,26 @@
 "use client";
 import { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import "./Login.css";
 
 function OTPVerification() {
   const navigate = useNavigate();
-  const location = useLocation();
   const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    // Get email from location state
-    const emailFromState = location.state?.email;
-    if (emailFromState) {
-      setEmail(emailFromState);
+    // Get email from localStorage
+    const storedEmail = localStorage.getItem("verificationEmail");
+    if (storedEmail) {
+      setEmail(storedEmail);
+    } else {
+      // If no email in localStorage, redirect to login
+      navigate("/login");
     }
-  }, [location]);
+  }, [navigate]);
 
   const otpSchema = Yup.object().shape({
     otp: Yup.string()
@@ -28,6 +31,14 @@ function OTPVerification() {
 
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
+      // Get email from localStorage
+      const storedEmail = localStorage.getItem("verificationEmail");
+
+      if (!storedEmail) {
+        setErrors({ submit: "Email not found. Please try again." });
+        return;
+      }
+
       const response = await fetch(
         "http://localhost:4000/login/auth/verifyotp",
         {
@@ -35,18 +46,23 @@ function OTPVerification() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ ...values, email }),
+          body: JSON.stringify({
+            email: storedEmail,
+            otp: values.otp,
+          }),
         }
       );
 
       const data = await response.json();
 
       if (response.ok) {
+        // Clear email from localStorage after successful verification
+        localStorage.removeItem("verificationEmail");
         // Handle successful verification
         navigate("/login");
       } else {
         // Handle errors
-        setErrors({ submit: data.message });
+        setErrors({ submit: data.message || "Invalid OTP" });
       }
     } catch (error) {
       console.error("Error:", error);
@@ -65,6 +81,13 @@ function OTPVerification() {
           <hr />
         </header>
       </div>
+      {email ? (
+        <div className="email-info">
+          <p>
+            We've sent a verification code to: <strong>{email}</strong>
+          </p>
+        </div>
+      ) : null}
       <Formik
         initialValues={{
           otp: "",

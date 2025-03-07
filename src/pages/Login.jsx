@@ -54,11 +54,16 @@ function Login() {
 
       if (response.ok) {
         if (isLogin) {
+          // Store tokens in cookies (handled by backend)
           navigate("/"); // Navigate to Home.jsx
         } else {
+          // Store email in localStorage for OTP verification
+          localStorage.setItem("verificationEmail", values.email);
           navigate("/verify"); // Navigate to Verify.jsx after signup
         }
       } else if (response.status === 403 && data.redirectTo === "/verify") {
+        // Store email in localStorage for OTP verification
+        localStorage.setItem("verificationEmail", data.email);
         navigate("/verify"); // Redirect to verification page if account is not verified
       } else {
         setErrors({ submit: data.message });
