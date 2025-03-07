@@ -1,34 +1,21 @@
 import React, { useState, useEffect } from "react";
-import Header from "../components/header";
-import Contents from "../components/blogContents"; 
 import axios from "axios";
+import Header from "../components/header";
+import Contents from "../components/blogContents";
 
 function Profile() {
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState({});
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [imageLoading, setImageLoading] = useState(false);
 
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
         setLoading(true);
-
-        // Get user data (assuming user info is stored in localStorage)
-        const storedUser = JSON.parse(localStorage.getItem("user"));
-        if (!storedUser || !storedUser.username) {
-          console.error("No user found in local storage");
-          setLoading(false);
-          return;
-        }
-
-        const username = storedUser.username;
-
-        // Fetch user details
-        const userResponse = await axios.get(`http://localhost:4000/user/${username}`);
+        const userResponse = await axios.get("http://localhost:4000/user/profile");
+        const postsResponse = await axios.get("http://localhost:4000/posts/profile");
         setUser(userResponse.data);
-
-        // Fetch user posts
-        const postsResponse = await axios.get(`http://localhost:4000/posts/profile/${username}`);
         setPosts(postsResponse.data);
       } catch (error) {
         console.error("Error fetching profile data:", error);
@@ -40,35 +27,58 @@ function Profile() {
     fetchProfileData();
   }, []);
 
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("avatar", file);
+
+    try {
+      setImageLoading(true);
+      const response = await axios.post("http://localhost:4000/user/upload-avatar", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      setUser((prevUser) => ({
+        ...prevUser,
+        avatar: response.data.avatarUrl,
+      }));
+    } catch (error) {
+      console.error("Error uploading profile picture:", error);
+    } finally {
+      setImageLoading(false);
+    }
+  };
+
   if (loading) return <p>Loading...</p>;
-  if (!user) return <p>User not found</p>;
 
   return (
     <div>
       <Header />
       <div style={{ textAlign: "center" }}>
         <img
-          src={user.avatar}
+          src={user.avatar || "https://via.placeholder.com/150"}
           alt="Avatar"
           style={{ borderRadius: "50%", width: "150px", height: "150px" }}
         />
         <h2>{user.name}</h2>
         <p>@{user.username}</p>
         <p>{user.bio}</p>
+
+        <input type="file" accept="image/*" onChange={handleImageUpload} style={{ marginTop: "10px" }} />
+        {imageLoading && <p>Uploading...</p>}
       </div>
 
-      {/* Display User's Blog Posts */}
       <div className="home-content">
         <h3>My Blogs</h3>
         {posts.length > 0 ? (
           posts.map((post) => (
-            <div key={post._id} className="post-container">
+            <div key={post.id} className="post-container">
               <Contents contents={post} />
               <div className="button-container" style={{ marginLeft: "40px" }}>
                 <button className="like-button">Like ({post.likes})</button>
-                <button className="report-button" style={{ marginLeft: "10px" }}>
-                  Report
-                </button>
+                <button className="report-button" style={{ marginLeft: "10px" }}>Report</button>
               </div>
             </div>
           ))

@@ -23,7 +23,7 @@ postRouter.post("/", createPost);
 
 postRouter.delete("/:id", deletePost);
 
-postRouter.get("/profile/:username", getUserPosts);
+postRouter.get("/profile", getUserPosts);
 
 
 //router.delete("/", checkToken, deleteAllUsers);
