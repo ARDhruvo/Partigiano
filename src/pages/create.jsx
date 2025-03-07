@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 
 function CreatePost() {
   const [title, setTitle] = useState('');
-  const [category, setCategory] = useState('');
+  //const [category, setCategory] = useState('');
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -16,8 +16,8 @@ function CreatePost() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!title || !content || !category) {
-      alert("All fields are required!");
+    if (!title || !content ) {
+      toast.error("All fields are required!");
       return;
     }
 
@@ -26,7 +26,7 @@ function CreatePost() {
       const response = await axios.post("http://localhost:4000/posts", {
         title,
         body: content,
-        category,
+        //category,
         author: "NRK"//user?.username, // Assign the logged-in user as the author
       });
       const {data} = response;
@@ -38,11 +38,12 @@ function CreatePost() {
 
     } catch (err) {
       console.error("Error creating post:", err);
+      toast.error("Failed to create post. Please try again.");
     }finally{
       setLoading(false)
     }
 
-    console.log("Post Submitted:", { title, category, content });
+    console.log("Post Submitted:", { title,/* category,*/ content });
   };
 
   const textAreaStyle = {
@@ -73,20 +74,7 @@ function CreatePost() {
               placeholder="Enter your post title..."
             />
           </label>
-
-          <label style={{ display: "block", marginBottom: "10px" }}>
-            Select Category:
-            <select 
-              value={category} 
-              onChange={(e) => setCategory(e.target.value)} 
-              style={textAreaStyle}>
-              <option value="">-- Choose a category --</option>
-              <option value="Technology">Technology</option>
-              <option value="Health">Health</option>
-              <option value="Emergency">Emergency</option>
-              <option value="Education">Education</option>
-            </select>
-          </label>
+          
 
           <label style={{ display: "block", marginBottom: "10px" }}>
             Write Your Blog:

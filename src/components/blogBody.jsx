@@ -28,21 +28,14 @@ function BlogBody() {
 
 
   const handleLike = async () => {
-    if (!contents) return;
-
     try {
-      // Optionally, update the backend
-      //await axiosInstance.patch(`/posts/${id}/like`);
-
-      // Optimistic update
-      setContents((prevContent) => ({
-        ...prevContent,
-        likes: prevContent.likes + 1,
-      }));
+      const response = await axios.patch(`http://localhost:4000/posts/${id}/like`);
+      setContents(response.data); // Update state with the new like count
     } catch (error) {
       console.error("Error liking post:", error);
     }
   };
+
 
   if(loading) return <p>Loading......</p>;
   if(!contents) return <p>Post not found!</p>;

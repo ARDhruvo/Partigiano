@@ -5,15 +5,25 @@ import "./home.css";
 function homeBody() {
   const [categories, setCategory] = useState([
     {
-      title: "Education",
-      body: "Post anything related to your study",
-      id: "Education",
+      title: "Technology",
+      body: "Post anything related to tech",
+      id: "Technology",
     },
     { title: "Emergency", body: "Post anything urgent", id: "Emergency" },
     {
       title: "Health",
-      body: "Post anything related to your study",
+      body: "Post anything related to health",
       id: "Health",
+    },
+    {
+      title: "Education",
+      body: "Post anything related to your studies",
+      id: "Education",
+    },
+    {
+      title: "Others",
+      body: "Post anything related to other stuffs",
+      id: "Others",
     },
   ]);
 

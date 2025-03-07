@@ -7,6 +7,7 @@ import {
   getPost,
   getPostByCat,
   getUserPosts,
+  updatePostLike,
 } from "../Controller/postController.js";
 
 const postRouter = express.Router();
@@ -16,6 +17,8 @@ postRouter.get("/", getAllPost);
 postRouter.get("/:category", getPostByCat);
 
 postRouter.get("/category/:id", getPost);
+
+postRouter.patch("/:id/like", updatePostLike);
 
 postRouter.post("/", createPost);
 
