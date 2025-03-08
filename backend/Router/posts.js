@@ -22,11 +22,9 @@ postRouter.patch("/:id/like", updatePostLike);
 
 postRouter.post("/", createPost);
 
-//router.put("/:id", checkToken, updatedUser);
-
 postRouter.delete("/:id", deletePost);
 
-postRouter.get("/profile", getUserPosts);
+router.get("/user/posts", authenticate, getUserPosts);
 
 
 //router.delete("/", checkToken, deleteAllUsers);

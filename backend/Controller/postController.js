@@ -101,13 +101,14 @@ export const createPost = async (req, res) => {
   };
   
 
-  export const getUserPosts = async (req, res) => {
-    try {
-      const posts = await Post.find().sort({ createdAt: -1 });
-      res.json(posts);
-    } catch (err) {
-        res.status(500).json({ message: "Server error" });
-    }
+  
+export const getUserPosts = async (req, res) => {
+  try {
+    const posts = await Post.find({ author: req.user.id }).sort({ createdAt: -1 });
+    res.json(posts);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
 };
 
 export const updatePostLike = async (req, res) => {
