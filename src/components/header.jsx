@@ -6,58 +6,63 @@ import "./home.css";
 
 function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken"); // change to accessToken later
     const refreshToken = localStorage.getItem("refreshToken"); // change to accessToken later
 
-    if (accessToken) {
+    if (accessToken && refreshToken) {
       setIsLoggedIn(true);
     }
-    // Check for the presence of an access token in cookies
-    // const checkAuthStatus = () => {
-    //   const cookies = document.cookie.split(";");
-    //   const accessTokenCookie = cookies.find((cookie) =>
-    //     cookie.trim().startsWith("accessToken=")
-    //   );
-    //   setIsLoggedIn(!!accessTokenCookie);
-    // };
 
-    // checkAuthStatus();
-    // // You might want to set up an interval to periodically check the auth status
-    // const interval = setInterval(checkAuthStatus, 60000); // Check every minute
+    const fetchUserData = async () => {
+      const email = localStorage.getItem("verificationEmail");
 
-    // return () => clearInterval(interval);
-  });
+      if (!email) {
+        // If no email is found, the user is not logged in
+        setIsLoggedIn(false);
+        return;
+      }
+
+      try {
+        // Fetch user data by email
+        const response = await fetch(`http://localhost:4000/info/${email}`);
+        const data = await response.json();
+
+        if (response.ok) {
+          // Check the user's accStatus
+          if (data.accStatus === "admin") {
+            console.log("Admin user detected");
+            setIsAdmin(true);
+          } else {
+            console.log("Regular user detected");
+          }
+        } else {
+          // Handle errors (e.g., user not found)
+          console.error("Failed to fetch user data:", data.message);
+          setIsLoggedIn(false);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        setIsLoggedIn(false);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   const handleLogout = async () => {
     localStorage.clear();
     setIsLoggedIn(false);
-
     navigate("/");
-
-    // try {
-    //   const response = await fetch("http://localhost:4000/login/auth/logout", {
-    //     method: "POST",
-    //     credentials: "include", // This is important to include cookies in the request
-    //   });
-
-    //   if (response.ok) {
-    //     setIsLoggedIn(false);
-    //     navigate("/login");
-    //   } else {
-    //     console.error("Logout failed");
-    //   }
-    // } catch (error) {
-    //   console.error("Logout error:", error);
-    // }
   };
 
   return (
     <div className="header">
       <div className="header-logo">
-        <Link to="/">
+        <Link to={isAdmin ? "/admin" : "/"}>
           <h3>PARTIGIANO</h3>
         </Link>
       </div>
@@ -67,9 +72,16 @@ function Header() {
             <Link to="/create">
               <button>Add Post</button>
             </Link>
-            <Link to="/profile">
-              <button>Profile</button>
-            </Link>
+            {/* Conditionally render the Link based on isAdmin */}
+            {isAdmin ? (
+              <Link to="/admin">
+                <button>Profile</button>
+              </Link>
+            ) : (
+              <Link to="/">
+                <button>Profile</button>
+              </Link>
+            )}
             <button onClick={handleLogout}>Logout</button>
           </>
         ) : (
