@@ -45,25 +45,25 @@ const postSchema = new mongoose.Schema({
 };
 
 export const createPost = async (req, res) => {
-  try {
-    const { title, body, author, /*category*/ } = req.body;
-    if (!title || !body ) {
-      return res.status(400).json({ message: "All fields are required" });
+    try {
+      const { title, body, author, /*category*/ } = req.body;
+      if (!title || !body ) {
+        return res.status(400).json({ message: "All fields are required" });
+      }
+
+      const category = await getCategoryFromAI(title,body);
+
+      const newPost = new Post({ title, body, author, category });
+      await newPost.save();
+      res.status(201).json(newPost);
+    } catch (err) {
+      res.status(500).json({ message: "Server error" });
     }
-
-    const category = await getCategoryFromAI(title,body);
-
-    const newPost = new Post({ title, body, author, category });
-    await newPost.save();
-    res.status(201).json(newPost);
-  } catch (err) {
-    res.status(500).json({ message: "Server error" });
-  }
-};
+  };
 
   export const getAllPost = async (req, res) => {
     try {
-      const posts = await Post.find().sort({ createdAt: -1 });
+      const posts = await Post.find().sort({ reports: -1 });
       res.json(posts);
     } catch (err) {
       res.status(500).json({ message: "Server error" });
