@@ -12,6 +12,7 @@ import OTP from "./pages/Verify";
 import VerificationSuccess from "./pages/verification-success";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import AdminBlog from "./pages/adminBlog";
 
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
@@ -27,6 +28,7 @@ function App() {
         <Route path="profile" element={<Profile />} />
         <Route path="aboutUs" element={<AboutUs />} />
         <Route path="blog/:id" element={<Blog />} />
+        <Route path="/admin/blog/:id" element={<AdminBlog />} />
         <Route path="create" element={<CreatePost />} />
         <Route path="admin" element={<Admin />} />
         <Route path="verify" element={<OTP />} />

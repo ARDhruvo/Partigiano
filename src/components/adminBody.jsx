@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 import BlogContents from "./blogContents";
+import AdminContents from "./adminContents";
 import { useParams } from "react-router-dom";
 import "./home.css";
 
@@ -38,7 +39,7 @@ function adminBody() {
         <hr />
       </div>
       
-      <BlogContents
+      <AdminContents
         blogs={blogs}
       />
       
