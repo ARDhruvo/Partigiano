@@ -44,22 +44,10 @@ function Contents({ contents }) {
           <h2>{contents.title}</h2>
 
           {/* Render content body with clickable links */}
-          <p>
-            {contents.body.split(" ").map((word, index) => {
-              return extractUrls(word).length > 0 ? (
-                <a
-                  key={index}
-                  href={word}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {word}{" "}
-                </a>
-              ) : (
-                word + " "
-              );
-            })}
-          </p>
+          <p
+            // Use dangerouslySetInnerHTML to parse and render the raw HTML content
+            dangerouslySetInnerHTML={{ __html: contents.body }}
+          />
 
           {/* Google Maps Embed (if location is provided) */}
           {googleMapsEmbedUrl && (
