@@ -228,6 +228,22 @@ export const updatePostReport = async (req, res) => {
     }
 
 };
+
+export const resetPostReport = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) return res.status(404).json({ message: "Post not found" });
+
+    post.reports = 0;
+    post.reportedBy = []; // Clear reported users
+    await post.save();
+
+    res.json(post);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+
+};
   
   
 

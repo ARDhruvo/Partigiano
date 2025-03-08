@@ -9,6 +9,7 @@ import {
   getUserPosts,
   updatePostLike,
   updatePostReport,
+  resetPostReport,
   createComment,
 } from "../Controller/postController.js";
 
@@ -23,6 +24,8 @@ postRouter.get("/category/:id", getPost);
 postRouter.patch("/:id/like", updatePostLike);
 
 postRouter.patch("/:id/report", updatePostReport);
+
+postRouter.patch("/:id/reset-reports", resetPostReport);
 
 postRouter.post("/", createPost);
 

@@ -3,6 +3,7 @@ import { useParams,useNavigate } from "react-router-dom";
 import Contents from "./contents";
 import "./blog.css";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 function adminBlogBody() {
   const { id } = useParams();
@@ -60,11 +61,25 @@ function adminBlogBody() {
 
 
   const handleDelete = async () => {
-    
+    try {
+      await axios.delete(`http://localhost:4000/posts/${id}`);
+      toast.success("Post deleted successfully!");
+      navigate("/admin"); // Redirect to admin dashboard after deletion
+    } catch (error) {
+      console.error("Error deleting post:", error);
+    }
   };
 
+
   const handleNotDelete = async () => {
-    
+    try {
+      const response = await axios.patch(`http://localhost:4000/posts/${id}/reset-reports`);
+      setContents(response.data); // Update UI with reset reports
+      toast.success("Reports have been reset!");
+      navigate("/admin");
+    } catch (error) {
+      console.error("Error resetting reports:", error);
+    }
   };
 
 
