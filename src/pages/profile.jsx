@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Header from "../components/header";
 import Contents from "../components/blogContents";
+import { useNavigate } from "react-router-dom";
 
 function Profile() {
   const [user, setUser] = useState({});
@@ -9,8 +10,57 @@ function Profile() {
   const [loading, setLoading] = useState(false);
   const [imageLoading, setImageLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [userEmail, setUserEmail] = useState("");
+    const [userId, setUserId] = useState(null);
+    const [userName, setUserName] = useState(null);
+    const navigate = useNavigate();
+  useEffect(() => {
+    // Get email from localStorage
+    const storedEmail = localStorage.getItem("verificationEmail");
+    if (!storedEmail) {
+      navigate("/login");
+      return;
+    }
+    setUserEmail(storedEmail);
+
+    // Fetch user info by email
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get(`http://localhost:4000/info/${storedEmail}`);
+        setUserId(response.data._id);
+        setUserName(response.data.username);
+        //console.log(response.data.username);
+      } catch (error) {
+        console.error("Error fetching user info:", error);
+        navigate("/login");
+      }
+    };
+
+    fetchUser();
+  }, [navigate]);
 
   useEffect(() => {
+    const fetchCategoryBlogs = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`http://localhost:4000/posts`); //${category}
+        const reportedBlogs = response.data
+        //.filter((blog) => blog.reports > 0); // Keep only reported blogs
+        .filter((blog) => blog.author === userName);
+        setPosts(reportedBlogs);
+        console.log(userId);
+        console.log(posts);
+      } catch (error) {
+        console.error("Error fetching category blogs:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategoryBlogs();
+  }, []);
+
+  /*useEffect(() => {
     const fetchProfileData = async () => {
       try {
         setLoading(true);
@@ -31,7 +81,7 @@ function Profile() {
     };
 
     fetchProfileData();
-  }, []);
+  }, []);*/
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -138,17 +188,17 @@ function Profile() {
       <div className="home-content" style={{ padding: "20px" }}>
         <h3>My Blogs</h3>
         {posts.length > 0 ? (
-          posts.map((post) => (
-            <div key={post.id} className="post-container" style={{ marginBottom: "20px" }}>
-              <Contents contents={post} />
+          
+            <div className="post-container" style={{ marginBottom: "20px" }}>
+              <Contents contents={posts} />
               <div className="button-container" style={{ marginTop: "10px" }}>
                 <button className="like-button" style={{ marginRight: "10px" }}>
-                  Like ({post.likes})
+                  Like ({posts.likes})
                 </button>
                 <button className="report-button">Report</button>
               </div>
             </div>
-          ))
+          
         ) : (
           <p>No blogs posted yet.</p>
         )}
