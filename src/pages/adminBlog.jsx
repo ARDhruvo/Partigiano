@@ -20,13 +20,7 @@ function adminBlog() {
     <div>
       <Header />
       <AdminBlogBody />
-      {isLoggedIn ? (
-        <>
-          <Comment />
-        </>
-      ) : (
-        <></>
-      )}
+      
     </div>
   );
 }

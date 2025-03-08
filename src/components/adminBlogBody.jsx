@@ -12,8 +12,7 @@ function adminBlogBody() {
   const [loading, setLoading] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [userId, setUserId] = useState(null);
-  const [likedPosts, setLikedPosts] = useState([]); 
-  const [reportedPosts, setReportedPosts] = useState([]);
+  
   
   useEffect(() => {
     // Get email from localStorage
@@ -48,20 +47,6 @@ function adminBlogBody() {
         setLoading(true);
         const response = await axios.get(`http://localhost:4000/posts/category/${id}`);
         setContents(response.data);
-        setLikedPosts((prev) => {
-          if (response.data.likedBy.includes(userId)) {
-            return [...prev, id]; // Add post ID if liked
-          }
-          return prev.filter((postId) => postId !== id); // Remove if unliked
-        });
-
-        setReportedPosts((prev) => {
-          if (response.data.reportedBy.includes(userId)) {
-            return [...prev, id]; 
-          }
-          return prev.filter((postId) => postId !== id);
-        });
-
 
       } catch (err) {
         console.error("Error Fetching Post:",err);
@@ -74,46 +59,20 @@ function adminBlogBody() {
   }, [id,userId]);
 
 
-  const handleLike = async () => {
-    try {
-      const response = await axios.patch(`http://localhost:4000/posts/${id}/like`, { email: userEmail });
-
-      setContents(response.data.post);
-      setLikedPosts((prev) => {
-        if (response.data.hasLiked) {
-          return [...prev, id]; // Add liked post ID
-        } else {
-          return prev.filter((postId) => postId !== id); // Remove unliked post ID
-        }
-      });
-    } catch (error) {
-      console.error("Error liking post:", error);
-    }
+  const handleDelete = async () => {
+    
   };
 
-  const handleReport = async () => {
-    try {
-      const response = await axios.patch(`http://localhost:4000/posts/${id}/report`, { userId });
-
-      setContents(response.data);
-      setReportedPosts((prev) => {
-        if (response.data.reportedBy.includes(userId)) {
-          return [...prev, id];
-        } else {
-          return prev.filter((postId) => postId !== id);
-        }
-      });
-    } catch (error) {
-      console.error("Error reporting post:", error);
-    }
+  const handleNotDelete = async () => {
+    
   };
 
 
   if(loading) return <p>Loading......</p>;
   if(!contents) return <p>Post not found!</p>;
 
-  const isLiked = likedPosts.includes(id);
-  const isReported = reportedPosts.includes(id);
+ // const isLiked = likedPosts.includes(id);
+  //const isReported = reportedPosts.includes(id);
 
   return (
     <div className="homeTitle">
@@ -122,16 +81,16 @@ function adminBlogBody() {
           <div className="button-container" style={{ marginLeft: "40px" }}>
               <button
                 className="like-button"
-                onClick={handleLike}
+                onClick={handleDelete}
               >
-                {isLiked ? "👎 Dislike" : "👍 Like"} ({contents.likes})
+                Delete
               </button>
               <button
               className="report-button"
-              onClick={handleReport}
-              style={{ marginLeft: "10px", backgroundColor: isReported ? "red" : "gray" }}
+              onClick={handleNotDelete}
+              style={{ marginLeft: "10px", backgroundColor: "gray" }}
               >
-                {isReported ? "🚩 Reported" : "⚠️ Report"} ({contents.reports})
+                Not Delete
               </button>
 
             </div>
