@@ -32,7 +32,7 @@ function Contents({ contents }) {
   console.log(contents);
 
   // Check if contents object is not empty
-  if (contents && Object.keys(ents).length > 0) {
+  if (contents && Object.keys(contents).length > 0) {
     const googleMapsEmbedUrl = extractGoogleMapsEmbedUrl(contents.body);
     const allUrls = extractUrls(contents.body);
     const otherUrls = allUrls.filter((url) => !url.includes("google.com/maps"));
@@ -52,7 +52,7 @@ function Contents({ contents }) {
                   href={word}
                   target="_blank"
                   rel="noopener noreferrer"
-       cont         >
+                >
                   {word}{" "}
                 </a>
               ) : (

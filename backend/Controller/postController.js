@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 import { useParams } from "react-router-dom";
+import dotenv from "dotenv";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
+dotenv.config();
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const postSchema = new mongoose.Schema({
     title: String,
     body: String,
@@ -13,19 +18,48 @@ const postSchema = new mongoose.Schema({
   
   const Post = mongoose.model("Post", postSchema);
 
-export const createPost = async (req, res) => {
+  const getCategoryFromAI = async (title, body) => {
     try {
-      const { title, body, author, category } = req.body;
-      if (!title || !body || !author || !category) {
-        return res.status(400).json({ message: "All fields are required" });
-      }
-      const newPost = new Post({ title, body, author, category });
-      await newPost.save();
-      res.status(201).json(newPost);
-    } catch (err) {
-      res.status(500).json({ message: "Server error" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+        const prompt = `Classify this blog post into one of these categories: Technology, Health, Emergency, Education.  
+        ONLY return the exact category name from this list, nothing else. 
+
+        Title: ${title}
+        Content: ${body}`;
+
+
+        const result = await model.generateContent(prompt);
+        
+        console.log("AI Response:", result.response.text()); 
+
+        const aiResponse = result.response.text().trim();
+        const validCategories = ["Technology", "Health", "Emergency", "Education"];
+        return validCategories.find(cat => aiResponse.includes(cat)) || "Others";
+
+    } catch (error) {
+      //console.log("AI Error Response:", result.response.text()); 
+        console.error("Error categorizing post:", error);
+        return "Others"; // Default category if AI fails
     }
-  };
+};
+
+export const createPost = async (req, res) => {
+  try {
+    const { title, body, author, /*category*/ } = req.body;
+    if (!title || !body ) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    const category = await getCategoryFromAI(title,body);
+
+    const newPost = new Post({ title, body, author, category });
+    await newPost.save();
+    res.status(201).json(newPost);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
 
   export const getAllPost = async (req, res) => {
     try {
