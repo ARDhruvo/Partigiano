@@ -14,6 +14,14 @@ const postSchema = new mongoose.Schema({
     category: String,
     likes: { type: Number, default: 0 },
     likedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    comments: [
+      {
+        userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+        text: String,
+        reported: { type: Boolean, default: false },
+        timestamp: { type: Date, default: Date.now },
+      },
+    ],
     reports: { type: Number, default: 0 },
     createdAt: { type: Date, default: Date.now }
   });
