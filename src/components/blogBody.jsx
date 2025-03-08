@@ -10,10 +10,10 @@ function BlogBody() {
 
   const [contents, setContents] = useState();
   const [loading, setLoading] = useState(false);
-  //const [liked, setLiked] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [userId, setUserId] = useState(null);
   const [likedPosts, setLikedPosts] = useState([]); 
+  const [reportedPosts, setReportedPosts] = useState([]);
   
   useEffect(() => {
     // Get email from localStorage
@@ -54,6 +54,15 @@ function BlogBody() {
           }
           return prev.filter((postId) => postId !== id); // Remove if unliked
         });
+
+        setReportedPosts((prev) => {
+          if (response.data.reportedBy.includes(userId)) {
+            return [...prev, id]; 
+          }
+          return prev.filter((postId) => postId !== id);
+        });
+
+
       } catch (err) {
         console.error("Error Fetching Post:",err);
       } finally {
@@ -82,11 +91,29 @@ function BlogBody() {
     }
   };
 
+  const handleReport = async () => {
+    try {
+      const response = await axios.patch(`http://localhost:4000/posts/${id}/report`, { userId });
+
+      setContents(response.data);
+      setReportedPosts((prev) => {
+        if (response.data.reportedBy.includes(userId)) {
+          return [...prev, id];
+        } else {
+          return prev.filter((postId) => postId !== id);
+        }
+      });
+    } catch (error) {
+      console.error("Error reporting post:", error);
+    }
+  };
+
 
   if(loading) return <p>Loading......</p>;
   if(!contents) return <p>Post not found!</p>;
 
   const isLiked = likedPosts.includes(id);
+  const isReported = reportedPosts.includes(id);
 
   return (
     <div className="homeTitle">
@@ -99,9 +126,14 @@ function BlogBody() {
               >
                 {isLiked ? "👎 Dislike" : "👍 Like"} ({contents.likes})
               </button>
-              <button className="report-button" style={{ marginLeft: "10px" }}>
-                Report
+              <button
+              className="report-button"
+              onClick={handleReport}
+              style={{ marginLeft: "10px", backgroundColor: isReported ? "red" : "gray" }}
+              >
+                {isReported ? "🚩 Reported" : "⚠️ Report"} ({contents.reports})
               </button>
+
             </div>
           </div>
     </div>

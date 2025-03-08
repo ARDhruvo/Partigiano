@@ -8,6 +8,7 @@ import {
   getPostByCat,
   getUserPosts,
   updatePostLike,
+  updatePostReport,
   createComment,
 } from "../Controller/postController.js";
 
@@ -20,6 +21,8 @@ postRouter.get("/:category", getPostByCat);
 postRouter.get("/category/:id", getPost);
 
 postRouter.patch("/:id/like", updatePostLike);
+
+postRouter.patch("/:id/report", updatePostReport);
 
 postRouter.post("/", createPost);
 

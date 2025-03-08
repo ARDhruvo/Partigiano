@@ -33,6 +33,7 @@ const postSchema = new mongoose.Schema({
       },
     ],
     reports: { type: Number, default: 0 },
+    reportedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     createdAt: { type: Date, default: Date.now }
   });
   
@@ -171,17 +172,17 @@ export const updatePostLike = async (req, res) => {
 
   try {
     const user = await User.findOne({ email });
-    console.log(user);
+    
     if (!user) return res.status(404).json({ message: "User not found" });
 
     const post = await Post.findById(req.params.id);
-    console.log(post);
+    
     if (!post) return res.status(404).json({ message: "Post not found" });
-    console.log("Hello");
-    console.log(post.likedBy);
+  
+    
     const userIndex = post.likedBy.indexOf(user._id);
-    console.log("hello");
-    console.log(`${userIndex}`);
+    
+  
 
     if (userIndex === -1) {
       post.likes += 1;
@@ -196,6 +197,31 @@ export const updatePostLike = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+
+};
+
+export const updatePostReport = async (req, res) => {
+  const { userId } = req.body; // User ID from frontend
+
+    if (!userId) return res.status(400).json({ message: "User ID required" });
+
+    try {
+        const post = await Post.findById(req.params.id);
+        if (!post) return res.status(404).json({ message: "Post not found" });
+
+        const userIndex = post.reportedBy.indexOf(userId);
+
+        if (userIndex === -1) {
+            // User hasn't reported yet, so report it
+            post.reports += 1;
+            post.reportedBy.push(userId);
+        } 
+
+        await post.save();
+        res.json(post);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 
 };
   
