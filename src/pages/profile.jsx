@@ -17,8 +17,9 @@ function Profile() {
         const token = localStorage.getItem("accessToken");
         const config = { headers: { Authorization: `Bearer ${token}` } };
 
-        const userResponse = await axios.get("http://localhost:4000/user/profile", config);
-        const postsResponse = await axios.get("http://localhost:4000/posts/profile", config);
+        const userResponse = await axios.get("http://localhost:4000/info/email", config);
+        const postsResponse = await axios.get("http://localhost:4000/posts/user/posts", config);
+
 
         setUser(userResponse.data);
         setPosts(postsResponse.data);

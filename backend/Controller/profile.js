@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require("multer");
 const cloudinary = require("cloudinary").v2;
 const User = require("../models/User");
-const authenticate = require("../middleware/auth"); // Ensure user is authenticated
+const authenticate = require("../Middleware/auth"); // Ensure user is authenticated
 
 // Configure Cloudinary
 cloudinary.config({

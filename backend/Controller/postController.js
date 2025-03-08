@@ -154,14 +154,18 @@ export const createPost = async (req, res) => {
   
 
   
-export const getUserPosts = async (req, res) => {
-  try {
-    const posts = await Post.find({ author: req.user.id }).sort({ createdAt: -1 });
-    res.json(posts);
-  } catch (error) {
-    res.status(500).json({ message: "Server error" });
-  }
-};
+  export const getUserPosts = async (req, res) => {
+    try {
+      console.log("User ID from Token:", req.user.id);
+      const posts = await Post.find({ author: req.user.id }).sort({ createdAt: -1 });
+      console.log("Fetched Posts:", posts);
+      res.json(posts);
+    } catch (error) {
+      console.error("Error fetching user posts:", error);
+      res.status(500).json({ message: "Server error" });
+    }
+  };
+  
 
 export const updatePostLike = async (req, res) => {
   const { email } = req.body;
