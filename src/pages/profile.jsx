@@ -5,17 +5,18 @@ import Contents from "../components/blogContents";
 import { useNavigate } from "react-router-dom";
 
 function Profile() {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [imageLoading, setImageLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [userEmail, setUserEmail] = useState("");
-    const [userId, setUserId] = useState(null);
-    const [userName, setUserName] = useState(null);
-    const navigate = useNavigate();
+  const [userId, setUserId] = useState(null);
+  const [userName, setUserName] = useState(null);
+  const navigate = useNavigate();
+
+  // ✅ Fetch User Info First
   useEffect(() => {
-    // Get email from localStorage
     const storedEmail = localStorage.getItem("verificationEmail");
     if (!storedEmail) {
       navigate("/login");
@@ -23,13 +24,12 @@ function Profile() {
     }
     setUserEmail(storedEmail);
 
-    // Fetch user info by email
     const fetchUser = async () => {
       try {
         const response = await axios.get(`http://localhost:4000/info/${storedEmail}`);
         setUserId(response.data._id);
         setUserName(response.data.username);
-        //console.log(response.data.username);
+        setUser(response.data); // Store user data
       } catch (error) {
         console.error("Error fetching user info:", error);
         navigate("/login");
@@ -39,17 +39,19 @@ function Profile() {
     fetchUser();
   }, [navigate]);
 
+  // ✅ Fetch Blogs Only After `userName` Is Set
   useEffect(() => {
+    if (!userName) return;
+
     const fetchCategoryBlogs = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:4000/posts`); //${category}
-        const reportedBlogs = response.data
-        //.filter((blog) => blog.reports > 0); // Keep only reported blogs
-        .filter((blog) => blog.author === userName);
-        setPosts(reportedBlogs);
-        console.log(userId);
-        console.log(posts);
+        const response = await axios.get(`http://localhost:4000/posts`);
+        
+        const userBlogs = response.data.filter((blog) => blog.author === userName);
+        
+        setPosts(userBlogs);
+        console.log("Fetched blogs:", userBlogs);
       } catch (error) {
         console.error("Error fetching category blogs:", error);
       } finally {
@@ -58,30 +60,7 @@ function Profile() {
     };
 
     fetchCategoryBlogs();
-  }, []);
-
-  /*useEffect(() => {
-    const fetchProfileData = async () => {
-      try {
-        setLoading(true);
-        const token = localStorage.getItem("accessToken");
-        const config = { headers: { Authorization: `Bearer ${token}` } };
-
-        const userResponse = await axios.get("http://localhost:4000/info/email", config);
-        const postsResponse = await axios.get("http://localhost:4000/posts/user/posts", config);
-
-
-        setUser(userResponse.data);
-        setPosts(postsResponse.data);
-      } catch (error) {
-        console.error("Error fetching profile data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProfileData();
-  }, []);*/
+  }, [userName]); // ✅ Depend on userName
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -131,7 +110,7 @@ function Profile() {
       <div style={{ textAlign: "center", padding: "20px" }}>
         <div style={{ marginBottom: "20px", display: "inline-block", position: "relative" }}>
           <img
-            src={selectedImage || user.avatar || "https://via.placeholder.com/150"}
+            src={selectedImage || user?.avatar || "https://via.placeholder.com/150"}
             alt="Avatar"
             style={{
               borderRadius: "50%",
@@ -168,11 +147,7 @@ function Profile() {
 
         {selectedImage && (
           <div style={{ marginTop: "10px" }}>
-            <button className="upload-button"
-
-              onClick={handleImageUpload}
-              
-            >
+            <button className="upload-button" onClick={handleImageUpload}>
               Upload Profile Picture
             </button>
           </div>
@@ -180,25 +155,24 @@ function Profile() {
 
         {imageLoading && <p>Uploading...</p>}
 
-        <h2>{user.name}</h2>
-        <p>{user.username}</p>
-        <p>{user.bio}</p>
+        
+        <p>{user?.username || "No Username"}</p>
+        
       </div>
 
       <div className="home-content" style={{ padding: "20px" }}>
         <h3>My Blogs</h3>
         {posts.length > 0 ? (
-          
-            <div className="post-container" style={{ marginBottom: "20px" }}>
-              <Contents contents={posts} />
-              <div className="button-container" style={{ marginTop: "10px" }}>
-                <button className="like-button" style={{ marginRight: "10px" }}>
-                  Like ({posts.likes})
-                </button>
-                <button className="report-button">Report</button>
-              </div>
+          <div className="post-container" style={{ marginBottom: "20px" }}>
+            <Contents blogs={posts} />
+
+            <div className="button-container" style={{ marginTop: "10px" }}>
+              <button className="like-button" style={{ marginRight: "10px" }}>
+                Like ({posts.likes || 0})
+              </button>
+              <button className="report-button">Report</button>
             </div>
-          
+          </div>
         ) : (
           <p>No blogs posted yet.</p>
         )}
