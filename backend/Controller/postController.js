@@ -115,21 +115,21 @@ export const createPost = async (req, res) => {
     }
 };
 
+export const updatePostLike = async (req, res) => {
+  try {
+    const post = await Post.findByIdAndUpdate(
+      req.params.id,
+      { $inc: { likes: 1 } }, // Increment likes by 1
+      { new: true } // Return the updated document
+    );
 
+    if (!post) return res.status(404).json({ message: "Post not found" });
+
+    res.json(post);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
   
-  export const updatePostLike = async (req, res) => {
-    try {
-      const post = await Post.findByIdAndUpdate(
-        req.params.id,
-        { $inc: { likes: 1 } }, // Increment likes by 1
-        { new: true } // Return the updated document
-      );
   
-      if (!post) return res.status(404).json({ message: "Post not found" });
-  
-      res.json(post);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  };
 
