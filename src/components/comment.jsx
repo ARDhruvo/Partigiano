@@ -76,15 +76,14 @@ const CommentBox = () => {
           <ul className="comment-box-list">
             {comments.map((comment) => (
               <li key={comment._id} className="comment-box-item">
-                <strong>{comment.username}</strong> {/* Show the username */}
-                <p>{comment.text}</p>
+                <span className="comment-username">{comment.username}</span>
+                <span className="comment-text">{comment.text}</span>
                 {comment.reported ? (
                   <span className="reported-label"> (Reported)</span>
                 ) : (
                   <span
-                    className="report-text"
-                    style={{ cursor: "pointer", color: "red" }}
-                    onClick={() => handleReportComment(comment._id)}
+                  className="report-text"
+                  onClick={() => handleReportComment(comment._id)}
                   >
                     Report
                   </span>
