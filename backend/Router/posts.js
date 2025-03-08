@@ -24,7 +24,7 @@ postRouter.post("/", createPost);
 
 postRouter.delete("/:id", deletePost);
 
-router.get("/user/posts", authenticate, getUserPosts);
+postRouter.get("/user/posts", getUserPosts);
 
 //router.delete("/", checkToken, deleteAllUsers);
 
