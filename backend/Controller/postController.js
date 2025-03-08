@@ -7,6 +7,15 @@ import User from "../Model/user.js";
 dotenv.config();
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+const commentSchema = new mongoose.Schema({
+  text: { type: String, required: true },
+  username: { type: String, required: true }, // Stores the name of the commenter
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, // Reference to User
+  reported: { type: Boolean, default: false }, // Reported status
+  createdAt: { type: Date, default: Date.now }
+});
+
 const postSchema = new mongoose.Schema({
     title: String,
     body: String,
