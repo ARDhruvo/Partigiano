@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser"; // Import cookie-parser
 import { connectDB } from "./config/db.js";
 import rootRouter from "./Router/root.js";
 import postRouter from "./Router/posts.js";
+import infoRouter from "./Router/info.js"; // Import the new user routes
 
 dotenv.config();
 
@@ -25,9 +26,10 @@ app.use(express.json());
 
 const port = process.env.PORT;
 
-app.use("/login", rootRouter);
-
-app.use("/posts", postRouter);
+// Use the routers
+app.use("/login", rootRouter); // Existing routes
+app.use("/posts", postRouter); // Existing routes
+app.use("/info", infoRouter); // New user routes
 
 app.listen(port, () => {
   connectDB();
