@@ -22,7 +22,7 @@ const CommentBox = () => {
     const fetchComments = async () => {
       try {
         const response = await axios.get(`http://localhost:4000/posts/category/${id}`);
-        console.log(response.data);
+        //console.log(response.data);
         setComments(response.data.comments);
       } catch (error) {
         console.error("Error fetching comments:", error);
@@ -49,12 +49,12 @@ const CommentBox = () => {
   };
 
   const handleReportComment = async (commentId) => {
-    try {
+    /*try {
       const response = await axios.patch(`http://localhost:4000/posts/${postId}/comment/${commentId}/report`);
       setComments(response.data.comments);
     } catch (error) {
       console.error("Error reporting comment:", error);
-    }
+    }*/
   };
 
   return (
@@ -76,7 +76,8 @@ const CommentBox = () => {
           <ul className="comment-box-list">
             {comments.map((comment) => (
               <li key={comment._id} className="comment-box-item">
-                <span>{comment.text}</span>
+                <strong>{comment.username}</strong> {/* Show the username */}
+                <p>{comment.text}</p>
                 {comment.reported ? (
                   <span className="reported-label"> (Reported)</span>
                 ) : (
