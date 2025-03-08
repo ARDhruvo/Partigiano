@@ -71,6 +71,37 @@ export const createPost = async (req, res) => {
     }
   };
 
+  export const createComment = async (req, res) => {
+    const { email, text } = req.body;
+    //console.log(text);
+
+  if (!email || !text.trim()) {
+    return res.status(400).json({ message: "Invalid request" });
+  }
+
+  try {
+    const user = await User.findOne({ email }); // Find user by email
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const post = await Post.findById(req.params.id);
+    if (!post) return res.status(404).json({ message: "Post not found" });
+    console.log(text);
+
+    post.comments.push({
+      userId: user._id,
+      text,
+      reported: false,
+    });
+    console.log(post.comments);
+
+    await post.save();
+    res.json(post);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+
+  };
+
   export const getAllPost = async (req, res) => {
     try {
       const posts = await Post.find().sort({ reports: -1 });
