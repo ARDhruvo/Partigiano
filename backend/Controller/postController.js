@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import { useParams } from "react-router-dom";
 import dotenv from "dotenv";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import User from "../Model/user.js"; 
 
 dotenv.config();
 
@@ -12,6 +13,7 @@ const postSchema = new mongoose.Schema({
     author: String,
     category: String,
     likes: { type: Number, default: 0 },
+    likedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     reports: { type: Number, default: 0 },
     createdAt: { type: Date, default: Date.now }
   });
@@ -112,19 +114,39 @@ export const getUserPosts = async (req, res) => {
 };
 
 export const updatePostLike = async (req, res) => {
+  const { email } = req.body;
+ // console.log(email);
+
+  if (!email) return res.status(400).json({ message: "User email required" });
+
   try {
-    const post = await Post.findByIdAndUpdate(
-      req.params.id,
-      { $inc: { likes: 1 } }, // Increment likes by 1
-      { new: true } // Return the updated document
-    );
+    const user = await User.findOne({ email });
+    console.log(user);
+    if (!user) return res.status(404).json({ message: "User not found" });
 
+    const post = await Post.findById(req.params.id);
+    console.log(post);
     if (!post) return res.status(404).json({ message: "Post not found" });
+    console.log("Hello");
+    console.log(post.likedBy);
+    const userIndex = post.likedBy.indexOf(user._id);
+    console.log("hello");
+    console.log(`${userIndex}`);
 
-    res.json(post);
+    if (userIndex === -1) {
+      post.likes += 1;
+      post.likedBy.push(user._id);
+    } else {
+      post.likes -= 1;
+      post.likedBy.splice(userIndex, 1);
+    }
+
+    await post.save();
+    res.json({ post, hasLiked: userIndex === -1 });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+
 };
   
   

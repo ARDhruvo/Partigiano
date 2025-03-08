@@ -29,7 +29,7 @@ const extractGoogleMapsEmbedUrl = (text) => {
 };
 
 function Contents({ contents }) {
-  console.log(contents);
+  //console.log(contents);
 
   // Check if contents object is not empty
   if (contents && Object.keys(contents).length > 0) {
