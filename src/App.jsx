@@ -9,6 +9,7 @@ import Blog from "./pages/blog";
 import CreatePost from "./pages/create";
 import Admin from "./pages/admin";
 import OTP from "./pages/Verify";
+import VerificationSuccess from "./pages/verification-success";
 
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
@@ -27,6 +28,7 @@ function App() {
         <Route path="create" element={<CreatePost />} />
         <Route path="admin" element={<Admin />} />
         <Route path="verify" element={<OTP />} />
+        <Route path="verification-success" element={<VerificationSuccess />} />
       </Routes>
     </>
   );
