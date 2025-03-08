@@ -9,9 +9,10 @@ function Header() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken"); // change to accessToken later
+    const accessToken = localStorage.getItem("accessToken"); // change to accessToken later
+    const refreshToken = localStorage.getItem("refreshToken"); // change to accessToken later
 
-    if (token) {
+    if (accessToken) {
       setIsLoggedIn(true);
     }
     // Check for the presence of an access token in cookies

@@ -56,8 +56,21 @@ function Login() {
       if (response.ok) {
         if (isLogin) {
           localStorage.setItem("accessToken", data.accessToken);
-          // Store tokens in cookies (handled by backend)
-          navigate("/"); // Navigate to Home.jsx
+          localStorage.setItem("refreshToken", data.refreshToken);
+          localStorage.setItem("verificationEmail", data.user.email);
+
+          console.log("User email:", values.email);
+          console.log("User data:", data.user);
+          console.log("Account status:", data.user?.accStatus);
+
+          // Check if user is admin and redirect accordingly
+          if (data.user && data.user.accStatus === "admin") {
+            console.log("Admin user detected, redirecting to admin page");
+            navigate("/admin");
+          } else {
+            console.log("Regular user detected, redirecting to home page");
+            navigate("/");
+          }
         } else {
           // Store email in localStorage for OTP verification
           localStorage.setItem("verificationEmail", values.email);

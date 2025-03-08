@@ -28,7 +28,6 @@ postRouter.delete("/:id", deletePost);
 
 postRouter.get("/profile", getUserPosts);
 
-
 //router.delete("/", checkToken, deleteAllUsers);
 
 export default postRouter;
