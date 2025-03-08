@@ -48,7 +48,6 @@ button {
 }
 
 button:hover {
-  background-color: hsla(0, 0%, 10%, 0.87);
 }
 
 button:focus,

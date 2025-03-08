@@ -200,6 +200,9 @@ function Login() {
           {isLogin ? "Sign Up Instead?" : "Log In Instead?"}
         </button>
       </div>
+      <div>
+        <button className="textbtn">Forgot Password?</button>
+      </div>
     </div>
   );
 }
