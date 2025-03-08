@@ -13,6 +13,8 @@ import VerificationSuccess from "./pages/verification-success";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import AdminBlog from "./pages/adminBlog";
+import { Toaster } from "react-hot-toast";
+
 
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
@@ -36,6 +38,7 @@ function App() {
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="reset-password" element={<ResetPassword />} />
       </Routes>
+      <Toaster position="bottom-right"/>
     </>
   );
 }
