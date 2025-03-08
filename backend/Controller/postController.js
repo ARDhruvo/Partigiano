@@ -49,7 +49,7 @@ export const createPost = async (req, res) => {
   export const getPostByCat = async (req, res) => {
     try {
         const {category} = req.params;
-      const posts = await Post.find({ category: category });
+      const posts = await Post.find({ category: category }).sort({likes: -1});
       res.json(posts);
     } catch (err) {
       res.status(500).json({ error: "Failed to fetch category posts" });
