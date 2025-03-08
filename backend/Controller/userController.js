@@ -230,3 +230,55 @@ export const refreshToken = (req, res) => {
     res.status(200).json({ accessToken: newAccessToken });
   });
 };
+
+export const sendOtp = async (req, res) => {
+  const { email } = req.body;
+
+  console.log("OTP is trying to be sent");
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const otp = generateOTP();
+    await Verify.findOneAndUpdate(
+      { email },
+      { otp },
+      { upsert: true, new: true }
+    );
+
+    await transporter.sendMail({
+      from: process.env.SENDER,
+      to: email,
+      subject: "Password Reset OTP",
+      text: `Your OTP is: ${otp}`,
+    });
+
+    res.status(200).json({ message: "OTP sent successfully" });
+  } catch (error) {
+    console.error("Send OTP Error:", error);
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+
+// userController.js
+export const resetPassword = async (req, res) => {
+  const { email, newPassword } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    res.status(200).json({ message: "Password reset successfully" });
+  } catch (error) {
+    console.error("Reset Password Error:", error);
+    res.status(500).json({ message: "Server Error" });
+  }
+};
