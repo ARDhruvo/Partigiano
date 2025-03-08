@@ -78,7 +78,7 @@ function Header() {
                 <button>Profile</button>
               </Link>
             ) : (
-              <Link to="/">
+              <Link to="/profile">
                 <button>Profile</button>
               </Link>
             )}
