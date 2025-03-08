@@ -58,8 +58,8 @@ function OTPVerification() {
       if (response.ok) {
         // Clear email from localStorage after successful verification
         localStorage.removeItem("verificationEmail");
-        // Handle successful verification
-        navigate("/login");
+        // Navigate to success page instead of directly to login
+        navigate("/verification-success");
       } else {
         // Handle errors
         setErrors({ submit: data.message || "Invalid OTP" });

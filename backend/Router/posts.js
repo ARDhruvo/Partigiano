@@ -26,7 +26,6 @@ postRouter.delete("/:id", deletePost);
 
 router.get("/user/posts", authenticate, getUserPosts);
 
-
 //router.delete("/", checkToken, deleteAllUsers);
 
 export default postRouter;

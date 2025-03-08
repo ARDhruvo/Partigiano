@@ -1,17 +1,30 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import React from 'react';
 import Header from '../components/header';
 //import axiosInstance from '../utils/axiosInstance';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import toast from "react-hot-toast";
+import "./Login.css";
 
 function CreatePost() {
   const [title, setTitle] = useState('');
   //const [category, setCategory] = useState('');
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+      // Get email from localStorage
+      const storedEmail = localStorage.getItem("verificationEmail");
+      if (storedEmail) {
+        setEmail(storedEmail);
+      } else {
+        // If no email in localStorage, redirect to login
+        navigate("/login");
+      }
+    }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,11 +36,14 @@ function CreatePost() {
 
     try {
       setLoading(true);
+      console.log(email);
+      const user = await axios.get(`http://localhost:4000/info/${email}`)
+      console.log(user);
       const response = await axios.post("http://localhost:4000/posts", {
         title,
         body: content,
         //category,
-        author: "NRK"//user?.username, // Assign the logged-in user as the author
+        author: user?.data.username, // Assign the logged-in user as the author
       });
       const {data} = response;
       toast.success("Post Created Successfully");
