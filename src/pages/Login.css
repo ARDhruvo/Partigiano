@@ -51,6 +51,7 @@ h2 {
 
 .btn:hover,
 .inactBtn:hover {
+  background-color: hsla(0, 0%, 10%, 0.87);
   transform: translateY(-1px);
 }
 
@@ -92,13 +93,25 @@ h2 {
   cursor: pointer;
 }
 
-.textbtn :hover {
+.textbtn:hover {
   background: none;
   border: none;
   padding: 0;
-  color: hsla(0, 0%, 0%, 0.479);
+  color: hsla(0, 0%, 10%, 0.87);
   text-decoration: underline;
   cursor: pointer;
+}
+
+.textbtn:active {
+  background: none;
+  border: none;
+  padding: 0;
+  color: hsla(0, 0%, 20%, 0.87);
+  text-decoration: underline;
+}
+
+.textbtn:visited {
+  color: hsla(0, 0%, 0%, 0.87);
 }
 
 @media only screen and (max-width: 400px) {

@@ -59,6 +59,10 @@ body {
   white-space: nowrap; /* Prevents text from wrapping */
 }
 
+.headerbtn button:hover {
+  background-color: hsla(0, 0%, 10%, 0.87);
+}
+
 .headerbtn button:active {
   transform: translateY(1px);
 }

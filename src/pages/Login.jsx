@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import TextField from "@mui/material/TextField";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom"; // Added Link import
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import "./Login.css";
@@ -199,6 +199,12 @@ function Login() {
         <button className="inactBtn" onClick={toggleMode}>
           {isLogin ? "Sign Up Instead?" : "Log In Instead?"}
         </button>
+      </div>
+      <div>
+        {/* Corrected Link usage */}
+        <Link to="/forgot-password">
+          <button className="textbtn">Forgot Password?</button>
+        </Link>
       </div>
     </div>
   );

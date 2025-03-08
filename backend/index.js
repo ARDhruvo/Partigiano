@@ -6,6 +6,7 @@ import { connectDB } from "./config/db.js";
 import rootRouter from "./Router/root.js";
 import postRouter from "./Router/posts.js";
 import infoRouter from "./Router/info.js"; // Import the new user routes
+import resetRouter from "./Router/resetRouter.js"; // Import the new user routes
 
 dotenv.config();
 
@@ -30,6 +31,7 @@ const port = process.env.PORT;
 app.use("/login", rootRouter); // Existing routes
 app.use("/posts", postRouter); // Existing routes
 app.use("/info", infoRouter); // New user routes
+app.use("/forgot-password", resetRouter); // New user routes
 
 app.listen(port, () => {
   connectDB();
