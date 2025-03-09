@@ -65,8 +65,11 @@ function adminBlogBody() {
   const handleDelete = async () => {
     try {
       // First fetch the post to get author and title
-      const response = await fetch(`http://localhost:4000/posts/${id}`);
-      const data = await response.json();
+      const response = await axios.get(`http://localhost:4000/posts/category/${id}`);
+      const data = await response.data;
+      console.log(response.data);
+      console.log(response.data.title);
+      console.log(response.data.author);
 
       const postTitle = data.title;
       const authorUsername = data.author;
@@ -76,6 +79,7 @@ function adminBlogBody() {
         `http://localhost:4000/info/user/${authorUsername}`
       );
       const authorEmail = userResponse.data.email;
+      console.log(authorEmail);
 
       // Delete the post and pass email and title
       await axios.delete(`http://localhost:4000/posts/${id}`, {
