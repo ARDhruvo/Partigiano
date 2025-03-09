@@ -92,15 +92,19 @@ export const resetPassword = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Hash the new password (optional, since Mongoose pre-save middleware will hash it)
+    // Hash the new password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Update the password directly
-    user.password = hashedPassword;
+    // Update the password using findOneAndUpdate
+    const updatedUser = await User.findOneAndUpdate(
+      { email },
+      { password: hashedPassword },
+      { new: true }
+    );
 
-    // Save the user (Mongoose's pre-save middleware will also hash the password)
-    await user.save();
+    // Remove the verification entry if it exists
+    await Verify.findOneAndDelete({ email });
 
     res.status(200).json({ message: "Password reset successfully" });
   } catch (error) {

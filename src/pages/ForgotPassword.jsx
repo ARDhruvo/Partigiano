@@ -52,6 +52,7 @@ function ForgotPassword() {
 
   const handleOtpSubmit = async (values) => {
     try {
+      console.log("Password is reset");
       const response = await fetch(
         "http://localhost:4000/forgot-password/verify-otp",
         {

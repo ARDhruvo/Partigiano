@@ -14,10 +14,11 @@ function ResetPassword() {
 
   const handleSubmit = async (values) => {
     try {
+      console.log(localStorage.getItem("verificationEmail"), values.password);
       const response = await fetch(
         "http://localhost:4000/forgot-password/reset-password",
         {
-          method: "PUT",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
@@ -31,6 +32,7 @@ function ResetPassword() {
       const data = await response.json();
 
       if (response.ok) {
+        alert("Password reset successfully!");
         navigate("/login");
       } else {
         setError(data.message || "Failed to reset password");
@@ -50,17 +52,17 @@ function ResetPassword() {
         </header>
       </div>
       <Formik
-        initialValues={{ newPassword: "", confirmPassword: "" }}
+        initialValues={{ password: "", confirmPassword: "" }}
         validationSchema={Yup.object({
           password: Yup.string()
             .min(6, "Password must be at least 6 characters")
             .matches(
               /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/,
-              "Password must contain at least one number and one special character"
+              "Password must contain at least one letter, one number, and one special character"
             )
             .required("Password is required"),
           confirmPassword: Yup.string()
-            .oneOf([Yup.ref("newPassword")], "Passwords must match")
+            .oneOf([Yup.ref("password")], "Passwords must match")
             .required("Confirm password is required"),
         })}
         onSubmit={handleSubmit}
@@ -68,7 +70,7 @@ function ResetPassword() {
         {({ isSubmitting, errors, touched }) => (
           <Form>
             <div className="textbox">
-              <Field name="newPassword">
+              <Field name="password">
                 {({ field, meta }) => (
                   <TextField
                     {...field}

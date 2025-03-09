@@ -16,6 +16,6 @@ router.post("/send-otp", sendOtp);
 router.post("/verify-otp", verifyOtp);
 
 // Route to reset password
-router.post("/reset-password", validateOtpForPasswordReset, resetPassword);
+router.post("/reset-password", resetPassword);
 
 export default router;
