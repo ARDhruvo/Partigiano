@@ -1,5 +1,6 @@
 import React from "react";
-
+import dotenv from "dotenv";
+ //dotenv.config();
 // Function to detect URLs in text
 const extractUrls = (text) => {
   const urlRegex = /(https?:\/\/[^\s]+)/g;
@@ -18,11 +19,11 @@ const extractGoogleMapsEmbedUrl = (text) => {
   if (mapsUrl.includes("/maps/place/")) {
     // Extract location name from "/maps/place/LOCATION/"
     const placeName = mapsUrl.split("/maps/place/")[1]?.split("/")[0]?.replace(/\+/g, " ");
-    embedUrl = `https://www.google.com/maps/embed/v1/place?key=AIzaSyAHIzeds49klUEvVnKQ1ZwQTvacId8tAvw&q=${encodeURIComponent(placeName)}`;
+    embedUrl = `https://www.google.com/maps/embed/v1/place?key=${process.env.VITE_GMAP_KEY}&q=${encodeURIComponent(placeName)}`;
   } else if (mapsUrl.includes("/@")) {
     // Extract latitude and longitude from URLs containing "@LAT,LNG,"
     const latLng = mapsUrl.split("/@")[1]?.split(",")[0] + "," + mapsUrl.split("/@")[1]?.split(",")[1];
-    embedUrl = `https://www.google.com/maps/embed/v1/view?key=AIzaSyAHIzeds49klUEvVnKQ1ZwQTvacId8tAvw&center=${latLng}&zoom=14`;
+    embedUrl = `https://www.google.com/maps/embed/v1/view?key=${process.env.VITE_GMAP_KEY}&center=${latLng}&zoom=14`;
   }
 
   return embedUrl || null;
@@ -60,7 +61,7 @@ function Contents({ contents }) {
                 loading="lazy"
                 allowFullScreen
                 referrerPolicy="no-referrer-when-downgrade"
-                src={googleMapsEmbedUrl}/*{`https://www.google.com/maps/embed/v1/place?key=AIzaSyAHIzeds49klUEvVnKQ1ZwQTvacId8tAvw&q=${encodeURIComponent(
+                src={googleMapsEmbedUrl}/*{`https://www.google.com/maps/embed/v1/place?key=${process.env.GMAP_KEY}&q=${encodeURIComponent(
                   contents.location
                 )}`}*/
               ></iframe>
